@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +9,6 @@
   <link rel="shortcut icon" href="img/breaker-favicon.ico">
 
   <style>
-
     @import url('https://fonts.googleapis.com/css?family=Roboto');
     @import url('https://fonts.googleapis.com/css?family=Bree+Serif|Roboto:900');
 
@@ -17,11 +17,11 @@
       user-select: none;
     }
 
-    body { 
-      background: rgb(50, 50, 50); 
+    body {
+      background: rgb(50, 50, 50);
       padding: 0;
       margin: 0;
-      
+
       position: absolute;
       top: 50%;
       left: 50%;
@@ -71,7 +71,7 @@
       margin: 0 5px;
       margin-bottom: 20px;
     }
-    
+
     .levelBlock {
       width: 70px;
       height: 70px;
@@ -98,13 +98,16 @@
 
     /* game states styles */
 
-    canvas { 
-      background: #fff; 
-      display: flex; 
+    canvas {
+      background: #fff;
+      display: flex;
       margin: 0 auto;
     }
 
-    .game-over-notify, .pause-notify, .complete-notify, .win-notify {
+    .game-over-notify,
+    .pause-notify,
+    .complete-notify,
+    .win-notify {
       position: absolute;
       top: 50%;
       left: 50%;
@@ -114,35 +117,39 @@
       align-items: center;
       flex-direction: column;
       justify-content: center;
-      
+
       border-radius: 20px;
       border-right: 5px solid grey;
       border-bottom: 5px solid grey;
 
       background-color: rgba(255, 255, 255);
-      
+
     }
 
-    .game-over-notify h2, .pause-notify h2, .complete-notify h2, .win-notify h2 {
+    .game-over-notify h2,
+    .pause-notify h2,
+    .complete-notify h2,
+    .win-notify h2 {
       position: relative;
       color: #FF8181;
       font-weight: bold;
       text-transform: uppercase;
       font-size: 24px;
       white-space: nowrap;
-      
+
       margin: 20px 40px 10px 40px;
     }
 
     .game-over-notify .reload {
-      background-color: #0080FF;      
+      background-color: #0080FF;
     }
 
     .win-notify {
       font-family: 'Bree Serif', serif;
     }
 
-    .win-notify h2, .win-notify h3 {
+    .win-notify h2,
+    .win-notify h3 {
       font-size: 70px;
       color: #000000;
       text-align: center;
@@ -170,7 +177,8 @@
       position: relative;
     }
 
-    .winStar.filledStar, .filledStar.winStar::before {
+    .winStar.filledStar,
+    .filledStar.winStar::before {
       transition: all 1.5s;
       background: #0080FF;
     }
@@ -189,6 +197,7 @@
       background: linear-gradient(to bottom, rgba(221, 220, 219, 1) 0%, rgba(209, 208, 206, 1) 100%);
       z-index: 1;
     }
+
     .winStar,
     .winStar:before {
       -webkit-clip-path: polygon(50% 0%, 66% 27%, 98% 35%, 76% 57%, 79% 91%, 50% 78%, 21% 91%, 24% 57%, 2% 35%, 32% 27%);
@@ -213,7 +222,8 @@
       background-color: #0080FF;
     }
 
-    .win-notify .reload, .win-notify .home {
+    .win-notify .reload,
+    .win-notify .home {
       margin: 3px 20px;
       padding: 10px 40px;
     }
@@ -239,7 +249,7 @@
       padding: 10px 30px;
       padding-bottom: 20px;
     }
-    
+
 
     .button {
       background-color: #FF8080;
@@ -256,7 +266,7 @@
       height: 40px;
       background-color: #0080FF;
     }
-    
+
     .button:hover {
       opacity: .7;
     }
@@ -315,7 +325,7 @@
       align-items: center;
     }
 
-    .progress h5  {
+    .progress h5 {
       position: relative;
       top: 13px;
       left: 5px;
@@ -499,10 +509,10 @@
         opacity: 0;
       }
     }
-      
   </style>
 
 </head>
+
 <body>
   <!--[if lt IE 7]>
     <p class="browsehappy">You are using an <strong>outdated</strong> browser.
@@ -542,7 +552,7 @@
       <div class="settings">
         <img src="img/menu-alt-512.png" alt="menu" class="pause">
         <h6>Level <span class="level">0</span></h6>
-      </div>  
+      </div>
     </menu>
     <canvas id="myCanvas"></canvas>
     <div class="game-over-notify">
@@ -550,7 +560,7 @@
       <img src="img/recurring.png" alt="reload" class="button reload">
       <a href="home.html"><img src="img/home.png" alt="home" class="button"></a>
     </div>
-    
+
     <div class="pause-notify">
       <h2>Game paused</h2>
       <img src="img/continue.png" alt="continue" class="button continue">
@@ -589,7 +599,7 @@
 
     // game over
     const gameOverNotify = document.querySelector('.game-over-notify');
-    
+
     const menu = document.getElementById('menu');
     const starsFuller = document.querySelector('.fuller');
     // 1px of fuller
@@ -616,15 +626,15 @@
 
     menu.height = 100;
 
-    if( window.innerHeight > 750 ) {
-      canvas.height = 750 - menu.height 
+    if (window.innerHeight > 750) {
+      canvas.height = 750 - menu.height
     } else {
       canvas.height = window.innerHeight - menu.height;
     };
 
     screen.width > 420 ? canvas.width = 420 : canvas.width = screen.width;
 
-    if( screen.width < 420 ) {
+    if (screen.width < 420) {
       canvas.width = screen.width;
       canvas.style.marginRight = '0';
       canvas.style.marginLeft = '0';
@@ -641,7 +651,7 @@
       overlay.style.display = 'none';
       overlay.classList.toggle('fade-out')
     }, 1000);
-    
+
 
     // -------------------- choose level --------------------------------
 
@@ -651,7 +661,7 @@
     let necessaryScore = null;
 
     // sum of stars
-    for( let i = 1; i <= +levelsComplete; i++ ) {
+    for (let i = 1; i <= +levelsComplete; i++) {
       starsSum += +localStorage[`starsLevel-${i}`];
     }
 
@@ -660,7 +670,7 @@
     document.querySelector('.stars').innerHTML = starsSum;
 
     // create 30 levels depends on localstorage
-    for( let i = 1; i <= 30; i++ ) {
+    for (let i = 1; i <= 30; i++) {
       let level = document.createElement('div');
       level.classList.add('levelBlock');
 
@@ -670,7 +680,7 @@
       let levelSize = parseFloat(level.style.width);
 
       // next need level to pass
-      if( +levelsComplete + 1 >= i ) {
+      if (+levelsComplete + 1 >= i) {
         let number = document.createElement('h3');
         number.innerHTML = i;
         number.style.fontSize = levelSize / 4;
@@ -678,15 +688,15 @@
 
         let starsComplete = document.createElement('div');
         starsComplete.classList.add('starsComplete');
-        if(canvas.width < 380) starsComplete.style.bottom = (canvas.width / 16) + 'px';
+        if (canvas.width < 380) starsComplete.style.bottom = (canvas.width / 16) + 'px';
 
         let count = 1;
         let levelCompleteStars = localStorage[`starsLevel-${i}`];
-        while(count <= 3) {
+        while (count <= 3) {
           count++
           let miniStar = new Image(levelSize / 4, levelSize / 4);
           miniStar.src = 'img/miniBrownStar.png';
-          if( levelCompleteStars > 0 ) miniStar.src = 'img/miniStar.png';
+          if (levelCompleteStars > 0) miniStar.src = 'img/miniStar.png';
           starsComplete.appendChild(miniStar);
         }
 
@@ -695,7 +705,7 @@
       }
 
       // locked levels
-      if( levelsComplete < i &&  !(+levelsComplete + 1 == i)) {
+      if (levelsComplete < i && !(+levelsComplete + 1 == i)) {
         let lock = new Image(35, 40);
         lock.src = 'img/lock.png';
         level.appendChild(lock);
@@ -710,8 +720,8 @@
     function startGame() {
       currentLevel = currentLevel || this.dataset.level;
       document.querySelector('.choose-level').style.display = 'none';
-      
-      
+
+
       overlay.style.display = 'flex';
       overlay.classList.toggle('fade-out');
 
@@ -720,12 +730,12 @@
         overlay.classList.toggle('fade-out');
       }, 1000);
 
-      for( let i = 0; i <= 6; i++ ) {
+      for (let i = 0; i <= 6; i++) {
         // hard difficult
-        if( currentLevel % 5 * i == 0 ) difficult = 3;
+        if (currentLevel % 5 * i == 0) difficult = 3;
         // easy, after difficult 6, 7 -- 11, 12 -- 16, 17... okey you understand me
-        else if( currentLevel % Number(6 + (i * 5) == 0) || currentLevel % Number(7 + (i * 5) == 0)) difficult = 1;
-        // middle, okey
+        else if (currentLevel % Number(6 + (i * 5) == 0) || currentLevel % Number(7 + (i * 5) == 0)) difficult = 1;
+        // rest, okey
         else difficult = 2;
       }
       // define values you need to win ( just a tricky formula to count values)
@@ -738,18 +748,18 @@
       percentValue = necessaryScore / 100;
 
       game = new Game();
-      interval = setInterval(game._startGame.bind(game), 10); 
+      interval = setInterval(game._startGame.bind(game), 10);
 
-      for( let i = 0; i < reloads.length; i++ ) {
+      for (let i = 0; i < reloads.length; i++) {
         reloads[i].addEventListener('click', game._restart.bind(game));
       }
     }
 
 
-    
+
     // -------------------- Game ----------------------------------------
 
-    
+
 
     // animation
     let animationInterval = null;
@@ -772,9 +782,9 @@
 
     let brickColumnCount = 4;
     let brickRowCount = 10;
-    let bricks = [];                                  
+    let bricks = [];
 
-    
+
     // game class, all other classes handle by this class
     // every 10 ms execute all methods
     class Game {
@@ -786,7 +796,7 @@
         this._GameOver = new GameOver();
         this._BallDirection = new BallDirection();
         this._Pause = new Pause();
-      
+
         this._Pause._addEvents();
       }
 
@@ -794,21 +804,21 @@
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         // is started game or you choode the direct
-        if( isStarted == false ) {
-          
+        if (isStarted == false) {
+
           this._BallDirection._addEvents();
           this._BallDirection._drawDirection();
 
           this._Bricks._drawBricks();
           this._Bricks._bricksCollision();
 
-          for( let i = 0; i < balls.length; i++ ) {
+          for (let i = 0; i < balls.length; i++) {
             this._Ball._drawBall(balls[i]);
           }
 
           // only main ball doenst move
-          for( let i = 1; i < balls.length; i++ ) {
-            if( balls[i].status == 0 ) continue;
+          for (let i = 1; i < balls.length; i++) {
+            if (balls[i].status == 0) continue;
             balls[i].x += balls[i].dx;
             balls[i].y += balls[i].dy;
           }
@@ -820,11 +830,11 @@
           this._Bricks._drawBricks();
           this._Bricks._bricksCollision();
 
-          for( let i = 0; i < balls.length; i++ ) {
+          for (let i = 0; i < balls.length; i++) {
             this._Ball._drawBall(balls[i]);
           }
 
-          for( let i = 0; i < balls.length; i++ ) {
+          for (let i = 0; i < balls.length; i++) {
             balls[i].x += balls[i].dx;
             balls[i].y += balls[i].dy;
           }
@@ -835,7 +845,7 @@
           this._Paddle._paddleCollision();
           this._additionalFuncs();
 
-          if( isStarted == null ) isStarted = false;
+          if (isStarted == null) isStarted = false;
         }
       }
 
@@ -847,7 +857,7 @@
         isAnimated = false;
         clearInterval(animationInterval);
 
-        shoots.innerHTML = 14 + ((currentLevel / difficult) * 2);
+        shoots.innerHTML = 14 + Math.floor(((currentLevel / difficult) * 2));
         bricksBreaken.innerHTML = 22 + (currentLevel * difficult * 4);
 
         minValue = 1;
@@ -885,35 +895,35 @@
       // bricks break animation and collision with sides
       _additionalFuncs() {
 
-        for( let c = 0; c < brickColumnCount; c++ ) {
-          for( let r = 0; r < brickRowCount; r++ ) {
-            if( bricks[c][r].animation ) {
+        for (let c = 0; c < brickColumnCount; c++) {
+          for (let r = 0; r < brickRowCount; r++) {
+            if (bricks[c][r].animation) {
               bricks[c][r].animation._moveSquares();
-              if( bricks[c][r].animation._counter > 2000 ) {
+              if (bricks[c][r].animation._counter > 2000) {
                 delete bricks[c][r].animation
               }
             };
 
-            if( bricks[c][r].y >= canvas.height * 0.85 && bricks[c][r].status == 1 && !isWin) {
+            if (bricks[c][r].y >= canvas.height * 0.85 && bricks[c][r].status == 1 && !isWin) {
               this._GameOver._endGame();
             }
           }
         }
 
-        balls.forEach( ball => {
-          if( ball.y > canvas.height ) ball.status = 0;
+        balls.forEach(ball => {
+          if (ball.y > canvas.height) ball.status = 0;
         });
 
         // all balls
-        for( let i = 0; i < balls.length; i++ ) {
+        for (let i = 0; i < balls.length; i++) {
 
           let ball = balls[i];
           // sides of field collision
-          if( ball.x + ball.dx > canvas.width - ball.ballRadius || ball.x + ball.dx < ball.ballRadius) {
+          if (ball.x + ball.dx > canvas.width - ball.ballRadius || ball.x + ball.dx < ball.ballRadius) {
             ball.dx = -ball.dx;
           }
-          
-          if( ball.y + ball.dy < ball.ballRadius) {
+
+          if (ball.y + ball.dy < ball.ballRadius) {
             ball.dy = -ball.dy;
           }
 
@@ -936,15 +946,22 @@
       }
 
       _createBall(x, y, dx, dy, ballRadius) {
-        let ball = {x: x, y: y, dx: dx, dy: dy, ballRadius: ballRadius, status: 1};
+        let ball = {
+          x: x,
+          y: y,
+          dx: dx,
+          dy: dy,
+          ballRadius: ballRadius,
+          status: 1
+        };
 
         balls.push(ball);
       }
 
       _drawBall(ball) {
-        if( ball.status == 0 ) return;
+        if (ball.status == 0) return;
         ctx.beginPath();
-        ctx.arc(ball.x, ball.y, ball.ballRadius, 0, Math.PI*2);
+        ctx.arc(ball.x, ball.y, ball.ballRadius, 0, Math.PI * 2);
         ctx.fillStyle = "#999";
         ctx.fill();
         ctx.closePath();
@@ -971,9 +988,9 @@
         this._necessaryPosition = {};
         this._endPosition = {};
 
-      // -------------------- mouse events -------------------
+        // -------------------- mouse events -------------------
 
-        this._mouseDown = function(e) {
+        this._mouseDown = function (e) {
           this._mousedown = true;
 
           this._startPosition = {
@@ -985,29 +1002,29 @@
         // save the mouse down so it can be used in multiple places
         this._mouseDownHandler = this._mouseDown.bind(this);
 
-        this._mouseMove = function(e) {
-          if( !this._mousedown ) return;
+        this._mouseMove = function (e) {
+          if (!this._mousedown) return;
 
           this._intermediatePosition = {
             x: e.pageX,
             y: e.pageY
-          };          
-          
-          this._drawDirection();       
+          };
+
+          this._drawDirection();
         }
 
         // save the mouse move so it can be used in multiple places
         this._mouseMoveHandler = this._mouseMove.bind(this);
 
-        this._mouseUp = function(e) {
+        this._mouseUp = function (e) {
           this._mousedown = false;
 
           this._endPosition = {
             x: e.pageX,
             y: e.pageY
           };
-          
-          if( this._sumBallsToPosition > 4 ) this._startBallMove();
+
+          if (this._sumBallsToPosition > 4) this._startBallMove();
         }
 
         // save the mouse up so it can be used in multiple places
@@ -1015,7 +1032,7 @@
 
         // ------------- touches ------------------
 
-        this._touchStart = function(e) {
+        this._touchStart = function (e) {
           this._mousedown = true;
 
           this._startPosition = {
@@ -1027,27 +1044,27 @@
         // save the touch start so it can be used in multiple places
         this._touchStartHandler = this._touchStart.bind(this);
 
-        this._touchMove = function(e) {
-          if( !this._mousedown ) return;
+        this._touchMove = function (e) {
+          if (!this._mousedown) return;
 
           this._intermediatePosition = {
             x: e.changedTouches[0].pageX,
             y: e.changedTouches[0].pageY
-          };   
+          };
         }
 
         // save the touch move so it can be used in multiple places
         this._touchMoveHandler = this._touchMove.bind(this);
 
-        this._touchEnd = function(e) {
+        this._touchEnd = function (e) {
           this._mousedown = false;
 
           this._endPosition = {
             x: e.changedTouches[0].pageX,
             y: e.changedTouches[0].pageY
           };
-          
-          if( this._sumBallsToPosition > 4) this._startBallMove();
+
+          if (this._sumBallsToPosition > 4) this._startBallMove();
         }
 
         // save the touch end so it can be used in multiple places
@@ -1070,19 +1087,19 @@
 
         this._sumCoords = +Math.sqrt((necessaryLength.x ** 2) + (necessaryLength.y ** 2)).toFixed(2);
         this._sumBallsToPosition = Math.floor(this._sumCoords / (this._miniballRadius + (this._miniOffset * 2)));
-    
+
         this._miniDx = +(necessaryLength.x / this._sumBallsToPosition).toFixed(3);
         this._miniDy = +(necessaryLength.y / this._sumBallsToPosition).toFixed(3);
 
-        if( isNaN(this._miniDx) ) return;
-        if( !isFinite(this._miniDx) ) return;
-        if( this._necessaryPosition.y > canvas.height * 0.85) return;
+        if (isNaN(this._miniDx)) return;
+        if (!isFinite(this._miniDx)) return;
+        if (this._necessaryPosition.y > canvas.height * 0.85) return;
 
         // draw mini ball until sides collision
-        while( this._miniX < canvas.width && this._miniX > 0 && this._miniY > 0 && this._miniY < canvas.height ) {
+        while (this._miniX < canvas.width && this._miniX > 0 && this._miniY > 0 && this._miniY < canvas.height) {
 
           ctx.beginPath();
-          ctx.arc(this._miniX, this._miniY, this._miniballRadius, 0, Math.PI*2);
+          ctx.arc(this._miniX, this._miniY, this._miniballRadius, 0, Math.PI * 2);
           ctx.fillStyle = "#999";
           ctx.fill();
           ctx.closePath();
@@ -1099,7 +1116,7 @@
 
       _startBallMove() {
 
-        if( this._necessaryPosition.y > canvas.height * 0.85) return;
+        if (this._necessaryPosition.y > canvas.height * 0.85) return;
 
         shoots.innerHTML -= 1;
 
@@ -1154,7 +1171,7 @@
 
     class Paddle {
       constructor() {
-    
+
         this._paddleLeftOffset = 10;
         this._paddleHeight = 3;
         this._leftOffset = (screen.width - canvas.width) / 2;
@@ -1176,16 +1193,16 @@
       }
 
       _paddleCollision() {
-        if( balls[0].y >= this._paddleY - balls[0].ballRadius - 3 && balls[0].dy > 0) {
+        if (balls[0].y >= this._paddleY - balls[0].ballRadius - 3 && balls[0].dy > 0) {
 
           // function that create bombs from rest shoots 
-          if( isWin ) {
+          if (isWin) {
             this._GameOver._restShoots();
             clearInterval(interval);
             return;
           }
 
-          if( shoots.innerHTML == 0 && !isWin ) {
+          if (shoots.innerHTML == 0 && !isWin) {
             this._GameOver._endGame();
             return;
           }
@@ -1200,8 +1217,8 @@
           return;
         }
 
-        for( let i = 1; i < balls.length; i++ ) {
-          if( balls[i].y >= this._paddleY - balls[i].ballRadius - 3) {
+        for (let i = 1; i < balls.length; i++) {
+          if (balls[i].y >= this._paddleY - balls[i].ballRadius - 3) {
             balls[i].status = 0;
           }
         }
@@ -1214,11 +1231,12 @@
         this._brickPadding = 10;
         this._brickWidth = Math.floor(canvas.width / 14);
         this._brickHeight = this._brickWidth;
-        this._brickOffsetLeft = (canvas.width - (this._brickWidth * brickRowCount) - (this._brickPadding * (brickRowCount - 1))) / 2;
+        this._brickOffsetLeft = (canvas.width - (this._brickWidth * brickRowCount) - (this._brickPadding * (
+          brickRowCount - 1))) / 2;
         this._brickOffsetTop = 15;
 
         this._colors = ['#64C9C5', '#5E423E', '#F1741A', '#2A91BC', '#FF9A2E', '#21E86C', '#EA6499'];
-        this._GameOver = new GameOver();                                                                                                                                                     
+        this._GameOver = new GameOver();
 
         this._fillBricks();
         this._drawBricks();
@@ -1227,17 +1245,20 @@
       }
 
       _fillBricks() {
-        for(let c = 0; c < brickColumnCount; c++) {
+        for (let c = 0; c < brickColumnCount; c++) {
           bricks[c] = [];
 
-          for(let r = 0; r < brickRowCount; r++) {
-            bricks[c][r] = { 
-              x: 0, y: 0,
-              status: getXPercent(70, 1, 0), strength: getStrength(),
-              color: this._colors[getRandom(0, 6)], ability: getAbility()
+          for (let r = 0; r < brickRowCount; r++) {
+            bricks[c][r] = {
+              x: 0,
+              y: 0,
+              status: getXPercent(70, 1, 0),
+              strength: getStrength(),
+              color: this._colors[getRandom(0, 6)],
+              ability: getAbility()
             };
 
-            if( bricks[c][r].ability == 'bomb' ) {
+            if (bricks[c][r].ability == 'bomb') {
               bricks[c][r].col = c;
               bricks[c][r].row = r;
             }
@@ -1246,17 +1267,17 @@
       }
 
       _drawBricks() {
-        for(let c = 0; c < brickColumnCount; c++) {
-          for(let r = 0; r < brickRowCount; r++) {
+        for (let c = 0; c < brickColumnCount; c++) {
+          for (let r = 0; r < brickRowCount; r++) {
             // current brick
             let b = bricks[c][r];
 
-            if(b.status == 1) {
+            if (b.status == 1) {
 
               let brickX = (r * (this._brickWidth + this._brickPadding)) + this._brickOffsetLeft;
               let brickY = (c * (this._brickHeight + this._brickPadding)) + this._brickOffsetTop;
 
-              if( !isAnimated ) {
+              if (!isAnimated) {
                 b.x = brickX;
                 b.y = brickY;
               }
@@ -1265,99 +1286,109 @@
               roundedRect(ctx, b.x, b.y, this._brickWidth, this._brickHeight, b.color, 5);
 
               switch (b.strength) {
-                case 1: {
-                  ctx.fillStyle = b.color;
-                  ctx.closePath();
-                  ctx.fill();
-                  break;
-                }
+                case 1:
+                  {
+                    ctx.fillStyle = b.color;
+                    ctx.closePath();
+                    ctx.fill();
+                    break;
+                  }
 
-                case 2: {
-                  ctx.fillStyle = LightenDarkenColor(b.color, 40);
-                  ctx.fill();
-                  ctx.closePath();
-                  ctx.beginPath();
+                case 2:
+                  {
+                    ctx.fillStyle = LightenDarkenColor(b.color, 40);
+                    ctx.fill();
+                    ctx.closePath();
+                    ctx.beginPath();
 
-                  ctx.moveTo(b.x, b.y + 5);
-                  ctx.lineTo(b.x + this._brickWidth - 5, b.y + this._brickHeight);
-                  ctx.lineWidth = 2;
-                  ctx.strokeStyle = LightenDarkenColor(b.color, 70);
-                  ctx.stroke();
+                    ctx.moveTo(b.x, b.y + 5);
+                    ctx.lineTo(b.x + this._brickWidth - 5, b.y + this._brickHeight);
+                    ctx.lineWidth = 2;
+                    ctx.strokeStyle = LightenDarkenColor(b.color, 70);
+                    ctx.stroke();
 
-                  ctx.moveTo(b.x + 10, b.y);
-                  ctx.lineTo(b.x + this._brickWidth, b.y + this._brickHeight - 10);
-                  ctx.lineWidth = 2;
-                  ctx.strokeStyle = LightenDarkenColor(b.color, 70);
-                  ctx.stroke();
-                  ctx.closePath();
-                }
+                    ctx.moveTo(b.x + 10, b.y);
+                    ctx.lineTo(b.x + this._brickWidth, b.y + this._brickHeight - 10);
+                    ctx.lineWidth = 2;
+                    ctx.strokeStyle = LightenDarkenColor(b.color, 70);
+                    ctx.stroke();
+                    ctx.closePath();
+                  }
               }
 
               switch (b.ability) {
-                case 'none': {
-                  break;
-                }
+                case 'none':
+                  {
+                    break;
+                  }
 
-                case 'bomb': {
-                  let img = new Image(20, 20);
-                  img.src = 'img/bomb.png';
+                case 'bomb':
+                  {
+                    let img = new Image(20, 20);
+                    img.src = 'img/bomb.png';
 
-                  b.color = '#F95264';
-                  ctx.drawImage(img, b.x + 5, b.y + 2.5, 25, 25);
+                    b.color = '#F95264';
+                    ctx.drawImage(img, b.x + 5, b.y + 2.5, 25, 25);
 
-                  break;
-                }
+                    break;
+                  }
 
-                case 'newBall': {
-                  b.color = '#F95264';
+                case 'newBall':
+                  {
+                    b.color = '#F95264';
 
-                  ctx.fillStyle = '#fff';
-                  ctx.beginPath();
-                  ctx.arc(b.x + this._brickWidth / 2, b.y + this._brickHeight / 2, standartBallRadius * 0.7, 0, Math.PI*2);
-                  ctx.fill();
+                    ctx.fillStyle = '#fff';
+                    ctx.beginPath();
+                    ctx.arc(b.x + this._brickWidth / 2, b.y + this._brickHeight / 2, standartBallRadius * 0.7, 0,
+                      Math.PI * 2);
+                    ctx.fill();
 
-                  break;
-                }
+                    break;
+                  }
 
-                case 'target': {
-                  let img = new Image(20, 20);
-                  img.src = 'img/target.jpg';
+                case 'target':
+                  {
+                    let img = new Image(20, 20);
+                    img.src = 'img/target.jpg';
 
-                  b.color = '#F95264';
-                  ctx.drawImage(img, b.x + 2.5, b.y + 2.5, 25, 25);
+                    b.color = '#F95264';
+                    ctx.drawImage(img, b.x + 2.5, b.y + 2.5, 25, 25);
 
-                  break;
-                }
+                    break;
+                  }
 
-                case 'black-hole': {
-                  let img = new Image(20, 20);
-                  img.src = 'img/black-hole.png';
+                case 'black-hole':
+                  {
+                    let img = new Image(20, 20);
+                    img.src = 'img/black-hole.png';
 
-                  b.color = '#F95264';
-                  ctx.drawImage(img, b.x + 5, b.y + 5, 20, 20);
+                    b.color = '#F95264';
+                    ctx.drawImage(img, b.x + 5, b.y + 5, 20, 20);
 
-                  break;
-                }
+                    break;
+                  }
 
-                case 'ball-reduce': {
-                  let img = new Image(20, 20);
-                  img.src = 'img/reduce.png';
+                case 'ball-reduce':
+                  {
+                    let img = new Image(20, 20);
+                    img.src = 'img/reduce.png';
 
-                  b.color = '#F95264';
-                  ctx.drawImage(img, b.x + 5, b.y + 5, 20, 20);
+                    b.color = '#F95264';
+                    ctx.drawImage(img, b.x + 5, b.y + 5, 20, 20);
 
-                  break;
-                }
+                    break;
+                  }
 
-                case 'atomic-bomb': {
-                  let img = new Image(20, 20);
-                  img.src = 'img/atomic.png';
+                case 'atomic-bomb':
+                  {
+                    let img = new Image(20, 20);
+                    img.src = 'img/atomic.png';
 
-                  b.color = '#F95264';
-                  ctx.drawImage(img, b.x + 5, b.y + 5, 20, 20);
+                    b.color = '#F95264';
+                    ctx.drawImage(img, b.x + 5, b.y + 5, 20, 20);
 
-                  break;
-                }
+                    break;
+                  }
               }
 
               ctx.closePath();
@@ -1367,69 +1398,71 @@
       }
 
       _bricksCollision() {
-        
+
         // brocken all need bricks to win
-        if( bricksBreaken.innerHTML == 0 ) {
+        if (bricksBreaken.innerHTML == 0) {
           this._GameOver._winLevel();
         }
 
-        for(let c = 0; c < brickColumnCount; c++) {
-          for(let r = 0; r < brickRowCount; r++) {
+        for (let c = 0; c < brickColumnCount; c++) {
+          for (let r = 0; r < brickRowCount; r++) {
             // current brick
             let b = bricks[c][r];
-            
-            if(b.status === 1) {
+
+            if (b.status === 1) {
 
               // check all balls
-              for( let i = 0; i < balls.length; i++ ) {
+              for (let i = 0; i < balls.length; i++) {
 
                 // current ball
                 let ball = balls[i];
 
                 // rebound from corners
-                    // left top corner
-                if( ball.x == b.x - ball.ballRadius  && ball.y == b.y - ball.ballRadius &&  ball.dx > 0 &&  ball.dy > 0 ||
-                    // right top corner
-                    ball.x >= b.x + this._brickWidth && ball.x <= b.x + this._brickWidth + ball.ballRadius && 
-                    ball.y <= b.y && ball.y >= b.y - ball.ballRadius &&  ball.dx < 0 &&  ball.dy > 0 ||
-                    // left bottom corner
-                    ball.x <= b.x && ball.x >= b.x - ball.ballRadius &&  ball.dx > 0 &&  ball.dy < 0 &&
-                    ball.y >= b.y + this._brickHeight  && ball.y <= b.y + this._brickHeight + ball.ballRadius ||
-                    // right bottom corner
-                    ball.x >= b.x + this._brickWidth && ball.x <= b.x + this._brickWidth + ball.ballRadius &&  ball.dy < 0 &&
-                    ball.y >= b.y + this._brickHeight && ball.y <= b.y + this._brickHeight + ball.ballRadius &&  ball.dx < 0) {
-                        
+                // left top corner
+                if (ball.x == b.x - ball.ballRadius && ball.y == b.y - ball.ballRadius && ball.dx > 0 && ball.dy > 0 ||
+                  // right top corner
+                  ball.x >= b.x + this._brickWidth && ball.x <= b.x + this._brickWidth + ball.ballRadius &&
+                  ball.y <= b.y && ball.y >= b.y - ball.ballRadius && ball.dx < 0 && ball.dy > 0 ||
+                  // left bottom corner
+                  ball.x <= b.x && ball.x >= b.x - ball.ballRadius && ball.dx > 0 && ball.dy < 0 &&
+                  ball.y >= b.y + this._brickHeight && ball.y <= b.y + this._brickHeight + ball.ballRadius ||
+                  // right bottom corner
+                  ball.x >= b.x + this._brickWidth && ball.x <= b.x + this._brickWidth + ball.ballRadius && ball.dy <
+                  0 &&
+                  ball.y >= b.y + this._brickHeight && ball.y <= b.y + this._brickHeight + ball.ballRadius && ball.dx <
+                  0) {
+
                   // change speed a bit
-                  if(  ball.dy < 3 &&  ball.dy > -3 ) {
-                     ball.dy = -ball.dy + 0.2;
+                  if (ball.dy < 3 && ball.dy > -3) {
+                    ball.dy = -ball.dy + 0.2;
                   } else {
-                     ball.dy = -ball.dy;
+                    ball.dy = -ball.dy;
                   }
-                  if(  ball.dx < 3 &&  ball.dx > -3 ) {
-                     ball.dx = -ball.dx + 0.2;
+                  if (ball.dx < 3 && ball.dx > -3) {
+                    ball.dx = -ball.dx + 0.2;
                   } else {
-                     ball.dx = -ball.dx;
+                    ball.dx = -ball.dx;
                   }
 
                   ball.y += ball.dy;
-                  ball.x += ball.dx;  
+                  ball.x += ball.dx;
 
                   this._collisionDOMUpdate(b, ball);
                   return;
                 }
 
                 // rebound from sides (top and bottom)
-                    // top
-                if( ball.x > b.x - ball.ballRadius && ball.x < b.x + this._brickWidth + ball.ballRadius && 
-                    ball.y > b.y - ball.ballRadius && ball.y < b.y &&  ball.dy > 0 ||
-                    // bottom
-                    ball.x > b.x - ball.ballRadius && ball.x < b.x + this._brickWidth + ball.ballRadius &&  ball.dy < 0 && 
-                    ball.y > b.y + this._brickHeight && ball.y < b.y + this._brickHeight + ball.ballRadius) {
+                // top
+                if (ball.x > b.x - ball.ballRadius && ball.x < b.x + this._brickWidth + ball.ballRadius &&
+                  ball.y > b.y - ball.ballRadius && ball.y < b.y && ball.dy > 0 ||
+                  // bottom
+                  ball.x > b.x - ball.ballRadius && ball.x < b.x + this._brickWidth + ball.ballRadius && ball.dy < 0 &&
+                  ball.y > b.y + this._brickHeight && ball.y < b.y + this._brickHeight + ball.ballRadius) {
 
-                  if( ball.dy < 3 &&  ball.dy > -3 ) {
-                      ball.dy = -ball.dy + 0.1;
+                  if (ball.dy < 3 && ball.dy > -3) {
+                    ball.dy = -ball.dy + 0.1;
                   } else {
-                      ball.dy = -ball.dy;
+                    ball.dy = -ball.dy;
                   }
 
                   ball.y += ball.dy * 2;
@@ -1439,17 +1472,17 @@
                 }
 
                 // rebound from sides (left and right)
-                    // left side
-                if( ball.y > b.y - ball.ballRadius && ball.y < b.y + this._brickHeight + ball.ballRadius &&
-                    ball.x <= b.x && ball.x >= b.x - ball.ballRadius ||
-                    // right side
-                    ball.y > b.y - ball.ballRadius && ball.y < b.y + this._brickHeight + ball.ballRadius &&
-                    ball.x >= b.x + this._brickWidth && ball.x <= b.x + this._brickWidth + ball.ballRadius) {
+                // left side
+                if (ball.y > b.y - ball.ballRadius && ball.y < b.y + this._brickHeight + ball.ballRadius &&
+                  ball.x <= b.x && ball.x >= b.x - ball.ballRadius ||
+                  // right side
+                  ball.y > b.y - ball.ballRadius && ball.y < b.y + this._brickHeight + ball.ballRadius &&
+                  ball.x >= b.x + this._brickWidth && ball.x <= b.x + this._brickWidth + ball.ballRadius) {
 
-                  if(  ball.dx < 3 &&  ball.dx > -3 ) {
-                     ball.dx = -ball.dx + 0.1;
+                  if (ball.dx < 3 && ball.dx > -3) {
+                    ball.dx = -ball.dx + 0.1;
                   } else {
-                     ball.dx = -ball.dx;
+                    ball.dx = -ball.dx;
                   }
 
                   ball.x += ball.dx * 2;
@@ -1471,147 +1504,167 @@
         this._checkStrength(brick);
 
         switch (brick.ability) {
-          case 'none': {
-            break;
-          }
-
-          case 'bomb': {
-
-            if( brick.strength > 1 ) break;
-            // get surroundingBricks
-            let surroundingBricks = [];
-            // fill arr surrounding bricks
-
-            if( brick.col >= 1 && typeof bricks[brick.col - 1][brick.row] == "object") 
-              surroundingBricks.push(bricks[brick.col - 1][brick.row]);
-
-            if( brick.row >= 1 && typeof bricks[brick.col][brick.row - 1] == "object") 
-              surroundingBricks.push(bricks[brick.col][brick.row - 1]);
-
-            if( brick.row < brickRowCount - 1 && typeof bricks[brick.col][brick.row + 1] == "object") 
-              surroundingBricks.push(bricks[brick.col][brick.row + 1]);
-
-            if( brick.col < brickColumnCount - 1 && typeof bricks[brick.col + 1][brick.row]== "object") 
-              surroundingBricks.push(bricks[brick.col + 1][brick.row]);
-
-            surroundingBricks.forEach( surBrick => {
-              if( surBrick.status == 1) this._collisionDOMUpdate(surBrick, breakBall);
-            });
-
-            break;
-          }
-
-          case 'newBall': {
-            if( brick.strength > 1 ) break;
-
-            let ball = {
-              x: brick.x + this._brickWidth, y: brick.y + this._brickHeight,
-              dx: breakBall.dx + getRandom(-1, 1), dy: -breakBall.dy,
-              ballRadius: 10, status: 1
+          case 'none':
+            {
+              break;
             }
 
-            balls.push(ball);
-            break;
-          }
+          case 'bomb':
+            {
 
-          case 'target': {
-            if( brick.strength > 1 ) break;
+              if (brick.strength > 1) break;
+              // get surroundingBricks
+              let surroundingBricks = [];
+              // fill arr surrounding bricks
 
-            shoots.innerHTML = +shoots.innerHTML + 3;
-            break;
-          }
+              if (brick.col >= 1 && typeof bricks[brick.col - 1][brick.row] == "object")
+                surroundingBricks.push(bricks[brick.col - 1][brick.row]);
 
-          case 'black-hole': {
-            if( brick.strength > 1 ) break;
+              if (brick.row >= 1 && typeof bricks[brick.col][brick.row - 1] == "object")
+                surroundingBricks.push(bricks[brick.col][brick.row - 1]);
 
-            let availableBricks = [];
+              if (brick.row < brickRowCount - 1 && typeof bricks[brick.col][brick.row + 1] == "object")
+                surroundingBricks.push(bricks[brick.col][brick.row + 1]);
 
-            for( let c = 0; c < brickColumnCount; c++ ) {
-              for( let r = 0; r < brickRowCount; r++ ) {
-                if( bricks[c][r].status == 1 ) availableBricks.push(bricks[c][r]);
+              if (brick.col < brickColumnCount - 1 && typeof bricks[brick.col + 1][brick.row] == "object")
+                surroundingBricks.push(bricks[brick.col + 1][brick.row]);
+
+              surroundingBricks.forEach(surBrick => {
+                if (surBrick.status == 1) this._collisionDOMUpdate(surBrick, breakBall);
+              });
+
+              break;
+            }
+
+          case 'newBall':
+            {
+              if (brick.strength > 1) break;
+
+              let ball = {
+                x: brick.x + this._brickWidth,
+                y: brick.y + this._brickHeight,
+                dx: breakBall.dx + getRandom(-1, 1),
+                dy: -breakBall.dy,
+                ballRadius: 10,
+                status: 1
               }
+
+              balls.push(ball);
+              break;
             }
 
-            let randomBrick = availableBricks[getRandom(0, availableBricks.length - 1)];
-            randomBrick.status = 0;
-            let size = 15;
+          case 'target':
+            {
+              if (brick.strength > 1) break;
 
-            ctx.clearRect(randomBrick.x, randomBrick.y, this._brickWidth, this._brickHeight);
-            
-            let holeInterval = setInterval(() => {
-              size = size - (size / 100);
-              ctx.beginPath();
-              ctx.arc(randomBrick.x + this._brickWidth / 2, randomBrick.y + this._brickHeight / 2, size, 0, Math.PI*2);
-              ctx.fillStyle = "#000";
-              ctx.fill();
-              ctx.closePath();
-            }, 10);
+              shoots.innerHTML = +shoots.innerHTML + 3;
+              break;
+            }
 
-            setTimeout(() => clearInterval(holeInterval), 1500);
+          case 'black-hole':
+            {
+              if (brick.strength > 1) break;
 
-            breakBall.x = randomBrick.x;
-            breakBall.y = randomBrick.y;
-            break;
-          }
+              let availableBricks = [];
 
-          case 'ball-reduce': {
-            if( brick.strength > 1 ) break;
-
-            breakBall.ballRadius = breakBall.ballRadius * 0.6;
-            setTimeout(() => breakBall.ballRadius = 10, 6000 * difficult);
-            break;
-          }
-
-          case 'atomic-bomb': {
-            if( brick.strength > 1 ) break;
-
-            overlay.style.display = 'flex';
-            overlay.classList.toggle('fade-in-overlay');
-
-            setTimeout(() => {
-              overlay.style.display = 'none';
-              overlay.classList.toggle('fade-in-overlay')
-            }, 1000);
-
-            setTimeout(() => {
-
-              balls = [];
-              let newBall = new Ball();
-              isStarted = null;
-
-              for( let c = 0; c < brickColumnCount; c++ ) {
-                for( let r = 0; r < brickRowCount; r++ ) {
-                  let brick = bricks[c][r];
-
-                  brick.strength >= 1 ? this._checkStrength(brick) : null;
+              for (let c = 0; c < brickColumnCount; c++) {
+                for (let r = 0; r < brickRowCount; r++) {
+                  if (bricks[c][r].status == 1) availableBricks.push(bricks[c][r]);
                 }
               }
-            }, 700); 
 
-            // brocken all need bricks to win
-            if( bricksBreaken.innerHTML == 0 ) {
-              this._GameOver._winLevel();
+              let randomBrick = availableBricks[getRandom(0, availableBricks.length - 1)];
+              randomBrick.status = 0;
+              let size = 15;
+
+              ctx.clearRect(randomBrick.x, randomBrick.y, this._brickWidth, this._brickHeight);
+
+              let holeInterval = setInterval(() => {
+                size = size - (size / 100);
+                ctx.beginPath();
+                ctx.arc(randomBrick.x + this._brickWidth / 2, randomBrick.y + this._brickHeight / 2, size, 0,
+                  Math.PI * 2);
+                ctx.fillStyle = "#000";
+                ctx.fill();
+                ctx.closePath();
+              }, 10);
+
+              setTimeout(() => clearInterval(holeInterval), 1500);
+
+              breakBall.x = randomBrick.x;
+              breakBall.y = randomBrick.y;
+              break;
             }
 
-            break;
-          }
+          case 'ball-reduce':
+            {
+              if (brick.strength > 1) break;
+
+              breakBall.ballRadius = breakBall.ballRadius * 0.6;
+              setTimeout(() => breakBall.ballRadius = 10, 6000 * difficult);
+              break;
+            }
+
+          case 'atomic-bomb':
+            {
+              if (brick.strength > 1) break;
+
+              overlay.style.display = 'flex';
+              overlay.classList.toggle('fade-in-overlay');
+
+              setTimeout(() => {
+                overlay.style.display = 'none';
+                overlay.classList.toggle('fade-in-overlay')
+              }, 1000);
+
+              setTimeout(() => {
+
+                balls = [];
+                let newBall = new Ball();
+                isStarted = null;
+
+                for (let c = 0; c < brickColumnCount; c++) {
+                  for (let r = 0; r < brickRowCount; r++) {
+                    let brick = bricks[c][r];
+
+                    brick.strength >= 1 ? this._checkStrength(brick) : null;
+                  }
+                }
+              }, 700);
+
+              // brocken all need bricks to win
+              if (bricksBreaken.innerHTML == 0) {
+                this._GameOver._winLevel();
+              }
+
+              break;
+            }
         }
       }
 
       _newColon() {
-        if( pixelsPlus > 0 ) return;
+        if (pixelsPlus > 0) return;
         isAnimated = true;
         brickColumnCount++;
 
         bricks[brickColumnCount - 1] = [];
 
-        for( let r = 0; r < brickRowCount; r++ ) {
-          bricks[brickColumnCount - 1][r] = { x: 0, y: 0, col: null, row: null, status: 0, strength: 0, color: 0, ability: 'none' };
+        for (let r = 0; r < brickRowCount; r++) {
+          bricks[brickColumnCount - 1][r] = {
+            x: 0,
+            y: 0,
+            col: null,
+            row: null,
+            status: 0,
+            strength: 0,
+            color: 0,
+            ability: 'none'
+          };
         }
 
         // new line of bricks
-        for(let c = brickColumnCount - 1; c > 0; c--) {
-          for(let r = 0; r < brickRowCount; r++) {
+        for (let c = brickColumnCount - 1; c > 0; c--) {
+          for (let r = 0; r < brickRowCount; r++) {
             let brick = bricks[c][r];
             let pastBrick = bricks[c - 1][r];
 
@@ -1622,7 +1675,7 @@
             brick.x = pastBrick.x;
             brick.y = pastBrick.y;
 
-            if( pastBrick.ability == 'bomb') {
+            if (pastBrick.ability == 'bomb') {
               brick.col = +pastBrick.col + 1;
               brick.row = pastBrick.row;
             }
@@ -1630,7 +1683,7 @@
         }
 
         // fulling new line rows
-        for( let r = 0; r < brickRowCount; r++ ) {
+        for (let r = 0; r < brickRowCount; r++) {
           bricks[0][r].color = this._colors[getRandom(0, 6)];
           bricks[0][r].ability = getAbility();
           bricks[0][r].status = getXPercent(70, 1, 0);
@@ -1638,7 +1691,7 @@
           bricks[0][r].x = (r * (this._brickWidth + this._brickPadding)) + this._brickOffsetLeft;
           bricks[0][r].y = -(this._brickOffsetTop + +this._brickHeight) + 20;
 
-          if( bricks[0][r].ability == 'bomb' ) {
+          if (bricks[0][r].ability == 'bomb') {
             bricks[0][r].col = 0;
             bricks[0][r].row = r;
           }
@@ -1646,8 +1699,8 @@
 
         // move out line animation
         animationInterval = setInterval(() => {
-          for(let c = 0; c < brickColumnCount; c++) {
-            for(let r = 0; r < brickRowCount; r++) {
+          for (let c = 0; c < brickColumnCount; c++) {
+            for (let r = 0; r < brickRowCount; r++) {
               bricks[c][r].y++;
             }
           }
@@ -1661,11 +1714,11 @@
 
       // stop animation
       _cancelAnimation() {
-        if(pixelsPlus >= 40) {
+        if (pixelsPlus >= 40) {
           clearInterval(animationInterval);
           isAnimated = false;
           pixelsPlus = 0;
-        } 
+        }
       }
 
       _checkStrength(brick) {
@@ -1674,15 +1727,15 @@
         score.innerHTML = +score.innerHTML + (10 * combo);
 
         brick.animation = new Animation(brick);
-        if( bricksBreaken.innerHTML > 0 && brick.strength == 1 ) bricksBreaken.innerHTML -= 1;
+        if (bricksBreaken.innerHTML > 0 && brick.strength == 1) bricksBreaken.innerHTML -= 1;
 
         brick.strength--;
-        if( brick.strength <= 0 ) {
+        if (brick.strength <= 0) {
           brick.status = 0;
           brick.strength = 0;
         }
 
-        if( +parseInt(starsFuller.style.width) >= 90) {
+        if (+parseInt(starsFuller.style.width) >= 90) {
           starsFuller.style.width = '90px';
           return;
         }
@@ -1698,7 +1751,7 @@
         completeNotify.style.display = 'flex';
         completeNotify.classList.add('fade-in');
 
-        setTimeout( () => {
+        setTimeout(() => {
           completeNotify.style.display = 'none';
           completeNotify.classList.remove('fade-in');
 
@@ -1714,13 +1767,13 @@
         winNotify.style.display = 'flex';
         winNotify.classList.add('fade-in');
 
-        for( let i = 0; i < winStarsSum; i++ ) {
+        for (let i = 0; i < winStarsSum; i++) {
           setTimeout(() => {
             winStars[i].classList.add('filledStar');
           }, 800 + i * 800)
         }
 
-        if( currentLevel > levelsComplete ) {
+        if (currentLevel > levelsComplete) {
           localStorage['levelsComplete'] = +levelsComplete + 1;
           localStorage[`starsLevel-${currentLevel}`] = winStarsSum;
         }
@@ -1734,12 +1787,12 @@
         let currentShoots = shoots.innerHTML;
         setTimeout(() => this._showWin(), shoots.innerHTML * 110)
 
-        for( let i = 0; i < currentShoots; i++) {
+        for (let i = 0; i < currentShoots; i++) {
           setTimeout(() => {
             score.innerHTML = +score.innerHTML + 20;
             shoots.innerHTML -= 1;
 
-            if( +parseInt(starsFuller.style.width) < 90) {
+            if (+parseInt(starsFuller.style.width) < 90) {
               starsFuller.style.width = ((score.innerHTML / percentValue) * percentWidth) + 'px';
             }
           }, i * 100);
@@ -1759,7 +1812,7 @@
 
       _pauseGame() {
         //just wait 1s to end animation, if it move blocks now
-        if( pixelsPlus > 1 ) setTimeout(() => {
+        if (pixelsPlus > 1) setTimeout(() => {
           pauseNotify.style.display = 'flex';
           pauseNotify.classList.toggle('fade-in');
 
@@ -1778,7 +1831,7 @@
         pauseNotify.style.display = 'none';
         pauseNotify.classList.toggle('fade-in');
 
-        interval = setInterval(game._startGame.bind(game), 10); 
+        interval = setInterval(game._startGame.bind(game), 10);
       }
 
       _addEvents() {
@@ -1790,7 +1843,7 @@
 
     // bricks break animation
     class Animation {
-      constructor(brick) {   
+      constructor(brick) {
         this._brick = brick;
         this._counter = 0;
         this._x = brick.x;
@@ -1804,7 +1857,7 @@
       }
 
       _createSquares() {
-        for( let i = 0; i < 4; i++ ) {
+        for (let i = 0; i < 4; i++) {
 
           this._square[i] = {};
 
@@ -1825,7 +1878,7 @@
 
       // mini squares leave in different ways
       _moveSquares() {
-        for( let i = 0; i < 4; i++ ) {
+        for (let i = 0; i < 4; i++) {
           this._counter++;
           this._square[i].dy += 0.05;
           this._square[i].a += 0.07;
@@ -1845,25 +1898,27 @@
           let b = this._square[i];
 
           switch (this._strength) {
-            case 1: {
-              ctx.fillStyle = this._color;
-              ctx.fill();
-              break;
-            }
+            case 1:
+              {
+                ctx.fillStyle = this._color;
+                ctx.fill();
+                break;
+              }
 
-            case 2: {
-              ctx.fillStyle = '#ECECEC';
-              ctx.fill();
-              ctx.strokeStyle = '#ECECEC';
-              ctx.stroke();
+            case 2:
+              {
+                ctx.fillStyle = '#ECECEC';
+                ctx.fill();
+                ctx.strokeStyle = '#ECECEC';
+                ctx.stroke();
 
-              ctx.strokeStyle = '#F6F6F6';
-              ctx.moveTo(b.x, b.y);
-              ctx.lineTo(b.x + this._size, b.y + this._size);
-              ctx.lineWidth = 1;
-              ctx.stroke();
-              break;
-            }
+                ctx.strokeStyle = '#F6F6F6';
+                ctx.moveTo(b.x, b.y);
+                ctx.lineTo(b.x + this._size, b.y + this._size);
+                ctx.lineWidth = 1;
+                ctx.stroke();
+                break;
+              }
           }
 
           ctx.closePath();
@@ -1883,94 +1938,92 @@
     }
 
     // paint border-radius on canvas elements
-    function roundedRect(ctx, x, y, width, height, color, radius){
+    function roundedRect(ctx, x, y, width, height, color, radius) {
       ctx.beginPath();
       ctx.moveTo(x, y + radius);
       ctx.lineTo(x, y + height - radius);
-      ctx.quadraticCurveTo(x, y + height, x + radius,y + height);
-      ctx.lineTo(x + width - radius,y + height);
+      ctx.quadraticCurveTo(x, y + height, x + radius, y + height);
+      ctx.lineTo(x + width - radius, y + height);
       ctx.quadraticCurveTo(x + width, y + height, x + width, y + height - radius);
       ctx.lineTo(x + width, y + radius);
       ctx.quadraticCurveTo(x + width, y, x + width - radius, y);
       ctx.lineTo(x + radius, y);
-      ctx.quadraticCurveTo(x, y, x, y+radius);
+      ctx.quadraticCurveTo(x, y, x, y + radius);
       ctx.strokeStyle = color;
       ctx.stroke();
       ctx.closePath();
     }
 
-  // lighten the color
-  function LightenDarkenColor(col, amt) {
-  
-    var usePound = false;
+    // lighten the color
+    function LightenDarkenColor(col, amt) {
 
-    if (col[0] == "#") {
+      var usePound = false;
+
+      if (col[0] == "#") {
         col = col.slice(1);
         usePound = true;
+      }
+
+      var num = parseInt(col, 16);
+
+      var r = (num >> 16) + amt;
+
+      if (r > 255) r = 255;
+      else if (r < 0) r = 0;
+
+      var b = ((num >> 8) & 0x00FF) + amt;
+
+      if (b > 255) b = 255;
+      else if (b < 0) b = 0;
+
+      var g = (num & 0x0000FF) + amt;
+
+      if (g > 255) g = 255;
+      else if (g < 0) g = 0;
+
+      return (usePound ? "#" : "") + (g | (b << 8) | (r << 16)).toString(16);
+
     }
 
-    var num = parseInt(col,16);
+    function getStrength() {
+      let strength = null;
 
-    var r = (num >> 16) + amt;
+      if (currentLevel >= 10 && getXPercent(20 * difficult, 1, 0)) {
+        // last 10 levels, getxpercent - 10% * difficult to get strength 3
+        if (currentLevel >= 20 && getXPercent(10 * difficult, 1, 0)) strength = 3;
+        // from 10 to 20 levels - max 2 strength, 20-60 %
+        else strength = 2;
+        // first 10 levels
+      } else strength = 1;
 
-    if (r > 255) r = 255;
-    else if  (r < 0) r = 0;
-
-    var b = ((num >> 8) & 0x00FF) + amt;
-
-    if (b > 255) b = 255;
-    else if  (b < 0) b = 0;
-
-    var g = (num & 0x0000FF) + amt;
-
-    if (g > 255) g = 255;
-    else if (g < 0) g = 0;
-
-    return (usePound?"#":"") + (g | (b << 8) | (r << 16)).toString(16);
-
-  }
-
-  function getStrength() {
-    let strength = null;
-
-    if( currentLevel >= 10 && getXPercent(20 * difficult, 1, 0) ) {
-      // last 10 levels, getxpercent - 10% * difficult to get strength 3
-      if( currentLevel >= 20 && getXPercent(10 * difficult, 1, 0)) strength = 3;
-      // from 10 to 20 levels - max 2 strength, 20-60 %
-      else strength = 2;
-      // first 10 levels
-    } else strength = 1;
-
-    return strength;
-  }
-
-  function getAbility() {
-
-    let abilities = ['bomb', 'newBall', 'target', 'black-hole', 'ball-reduce', 'atomic-bomb'];
-    let availableAbilities = [];
-
-    // every 5 colon new ability
-    for( let i = 1; i * 5 <= brickColumnCount; i += 1 ) {
-      availableAbilities.push(abilities[i - 1]);
+      return strength;
     }
 
-    // 24% percent to get ability
-    if( Math.random() > 0.76 ) return availableAbilities[getRandom(0, availableAbilities.length - 1)];
-    else return 'none'
-  }
+    function getAbility() {
 
-  // continue button
-  document.querySelector('.nextLevel').addEventListener('click', () => {
-    overlay.classList.toggle('fade-out');
+      let abilities = ['bomb', 'newBall', 'target', 'black-hole', 'ball-reduce', 'atomic-bomb'];
+      let availableAbilities = [];
 
-    setTimeout(() => {
-      location.reload();
-    }, 800);
-  });
+      // every 5 colon new ability
+      for (let i = 1; i * 5 <= brickColumnCount; i += 1) {
+        availableAbilities.push(abilities[i - 1]);
+      }
 
+      // 24% percent to get ability
+      if (Math.random() > 0.76) return availableAbilities[getRandom(0, availableAbilities.length - 1)];
+      else return 'none'
+    }
 
+    // continue button
+    document.querySelector('.nextLevel').addEventListener('click', () => {
+      overlay.classList.toggle('fade-out');
 
+      setTimeout(() => {
+        location.reload();
+      }, 800);
+    });
   </script>
 
 </body>
+
 </html>
