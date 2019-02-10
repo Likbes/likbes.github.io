@@ -14,7 +14,6 @@ class Player {
     this.score = 0;
 
     this.reset();
-    this.addEvents();
   }
 
   move(dir) {
@@ -159,36 +158,5 @@ class Player {
         [0, 0, 0]
       ];
     }
-  }
-
-  addEvents() {
-
-    document.addEventListener('keydown', e => {
-      // left
-      if (e.keyCode == 37) {
-        this.move(-1);
-      }
-
-      // right
-      if (e.keyCode == 39) {
-        this.move(1);
-      }
-
-      // down
-      if (e.keyCode == 40) {
-        this.drop();
-      }
-
-      // q
-      if (e.keyCode == 81) {
-        this.rotate(-1);
-      }
-
-      // w
-      if (e.keyCode == 87) {
-        this.rotate(1);
-      }
-
-    });
   }
 }
