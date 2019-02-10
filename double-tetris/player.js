@@ -1,10 +1,13 @@
 class Player {
   constructor(tetris) {
+
     this.tetris = tetris;
     this.arena = this.tetris.arena;
 
+    this.DROP_SLOW = 1000;
+    this.DROP_FAST = 50;
     this.dropCounter = 0;
-    this.dropInterval = 1000;
+    this.dropInterval = this.DROP_SLOW;
 
     this.pos = {
       x: 0,
@@ -68,8 +71,8 @@ class Player {
       this.pos.y--;
       this.arena.merge(this);
       this.reset();
-      this.arena.sweap();
-      this.updateScore();
+      this.score += this.arena.sweap();
+      this.tetris.updateScore(this.score);
     }
     this.dropCounter = 0;
   }
@@ -85,7 +88,7 @@ class Player {
     if (this.arena.collide(this)) {
       this.arena.clear();
       this.score = 0;
-      this.updateScore();
+      this.tetris.updateScore(0);
     }
 
     this.tetris.shadow.matrix = this.matrix;
@@ -96,10 +99,6 @@ class Player {
   update(deltaTime) {
     this.dropCounter += deltaTime;
     if (this.dropCounter > this.dropInterval) this.drop();
-  }
-
-  updateScore() {
-    document.getElementById('score').innerText = this.score;
   }
 
   createPiece(type) {

@@ -1,8 +1,9 @@
 class Tetris {
-  constructor(canvas) {
+  constructor(element) {
 
-    this.canvas = canvas;
-    this.context = canvas.getContext('2d');
+    this.element = element;
+    this.canvas = element.querySelector('.tetris');
+    this.context = this.canvas.getContext('2d');
     this.context.scale(20, 20);
 
     this.shadow = new Shadow(this);
@@ -36,7 +37,7 @@ class Tetris {
 
     update();
     this.player.reset();
-    this.player.updateScore();
+    this.updateScore(this.player.score);
   }
 
   drawMatricks(matrix, offset) {
@@ -51,7 +52,7 @@ class Tetris {
         }
       });
     });
-  };
+  }
 
   draw() {
     this.context.fillStyle = '#000';
@@ -64,6 +65,9 @@ class Tetris {
     this.shadow.fall();
 
     this.drawMatricks(this.player.matrix, this.player.pos);
-  };
+  }
 
+  updateScore(score) {
+    this.element.querySelector('.score').innerText = score;
+  }
 }
