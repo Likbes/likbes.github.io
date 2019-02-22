@@ -47,18 +47,15 @@
 </head>
 
 <body>
-  <div class="player">
-    <div class="score" id="score">0</div>
-    <canvas class="tetris" width="240" height="400"></canvas>
-  </div>
 
-  <div class="player">
-    <div class="score" id="score">0</div>
-    <canvas class="tetris" width="240" height="400"></canvas>
-  </div>
+  <template id="player-template">
+    <div class="player">
+      <div class="score" id="score">0</div>
+      <canvas class="tetris" width="240" height="400"></canvas>
+    </div>
+  </template>
 
-
-
+  <script src="TetrisManager.js"></script>
   <script src="player.js"></script>
   <script src="arena.js"></script>
   <script src="shadow.js"></script>

@@ -1,19 +1,14 @@
-const playerElements = document.querySelectorAll('.player');
-const tetrises = [];
+const tetrisManager = new TetrisManager(document);
+const localTetris = tetrisManager.createPlayer();
 
-[...playerElements].forEach(element => {
-  const tetris = new Tetris(element);
-  tetrises.push(tetris);
-});
 
 const keyListeners = e => {
-
   [
     [65, 68, 83, 81, 69],
     [37, 39, 40, 16, 34]
   ].forEach((key, index) => {
 
-    const player = tetrises[index].player;
+    const player = localTetris.player;
     if (e.type == 'keydown') {
       // left
       if (e.keyCode == key[0]) {
