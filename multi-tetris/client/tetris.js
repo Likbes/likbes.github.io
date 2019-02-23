@@ -1,73 +1,97 @@
 class Tetris {
-  constructor(element) {
+    constructor(element) {
+        this.element = element;
+        this.canvas = element.querySelector('canvas');
+        this.context = this.canvas.getContext('2d');
+        this.context.scale(20, 20);
 
-    this.element = element;
-    this.canvas = element.querySelector('.tetris');
-    this.context = this.canvas.getContext('2d');
-    this.context.scale(20, 20);
+        this.arena = new Arena(12, 20);
+        this.shadow = new Shadow(this);
+        this.player = new Player(this);
+        this.shadow.matrix = this.player.matrix;
+        this.player.events.listen('score', score => {
+            this.updateScore(score);
+        });
 
-    this.shadow = new Shadow(this);
-    this.arena = new Arena(12, 20);
-    this.player = new Player(this);
+        this.colors = [
+            null,
+            '#FF0D72',
+            '#0DC2FF',
+            '#0DFF72',
+            '#F538FF',
+            '#FF8E0D',
+            '#FFE138',
+            '#3877FF',
+        ];
 
-    this.colors = [
-      null,
-      '#FF0D72',
-      '#0DC2FF',
-      '#0DFF72',
-      '#F538FF',
-      '#FF8E0D',
-      '#FFE138',
-      '#3877FF',
-      'grey'
-    ]
+        let lastTime = 0;
+        this._update = (time = 0) => {
+            const deltaTime = time - lastTime;
+            lastTime = time;
 
-    let lastTime = 0;
-    // draw movement tetrix every second
+            this.player.update(deltaTime);
 
-    const update = (time = 0) => {
-      const deltaTime = time - lastTime;
-      lastTime = time;
+            this.draw();
+            requestAnimationFrame(this._update);
+        };
 
-      this.player.update(deltaTime);
+        this.updateScore(0);
+    }
 
-      this.draw();
-      requestAnimationFrame(update);
-    };
+    draw() {
+        this.context.fillStyle = '#000';
+        this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-    update();
-    this.player.reset();
-    this.updateScore(this.player.score);
-  }
+        this.drawMatrix(this.arena.matrix, {
+            x: 0,
+            y: 0
+        });
 
-  drawMatricks(matrix, offset) {
-    matrix.forEach((row, y) => {
-      row.forEach((value, x) => {
-        if (value != 0) {
-          this.context.fillStyle = this.colors[value];
-          this.context.fillRect(
-            x + offset.x,
-            y + offset.y,
-            1, 1);
-        }
-      });
-    });
-  }
+        [this.shadow.pos.x, this.shadow.pos.y] = [this.player.pos.x, this.player.pos.y]
+        this.shadow.fall(this.arena.matrix);
 
-  draw() {
-    this.context.fillStyle = '#000';
-    this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
-    this.drawMatricks(this.arena.matrix, {
-      x: 0,
-      y: 0,
-    });
-    [this.shadow.pos.x, this.shadow.pos.y] = [this.player.pos.x, this.player.pos.y]
-    this.shadow.fall();
+        this.drawMatrix(this.player.matrix, this.player.pos);
+    }
 
-    this.drawMatricks(this.player.matrix, this.player.pos);
-  }
+    drawMatrix(matrix, offset) {
+        matrix.forEach((row, y) => {
+            row.forEach((value, x) => {
+                if (value !== 0) {
+                    this.context.fillStyle = this.colors[value];
+                    this.context.fillRect(x + offset.x,
+                        y + offset.y,
+                        1, 1);
+                }
+            });
+        });
+    }
 
-  updateScore(score) {
-    this.element.querySelector('.score').innerText = score;
-  }
+    run() {
+        this._update();
+    }
+
+    serialize() {
+        return {
+            arena: {
+                matrix: this.arena.matrix,
+                collide: this.arena.collide
+            },
+            player: {
+                matrix: this.player.matrix,
+                pos: this.player.pos,
+                score: this.player.score,
+            },
+        };
+    }
+
+    unserialize(state) {
+        this.arena = Object.assign(state.arena);
+        this.player = Object.assign(state.player);
+        this.updateScore(this.player.score);
+        this.draw();
+    }
+
+    updateScore(score) {
+        this.element.querySelector('.score').innerText = score;
+    }
 }
