@@ -1,13 +1,15 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import { hot } from 'react-hot-loader';
 
 import styles from './app.scss';
 
-const TodoItem = () => {
+const TodoItem = props => {
   return (
     <div className={styles.todoItem}>
-      <input type="checkbox" />
-      <p>Placeholder for checkbo</p>
+      <input type="checkbox" checked={props.completed} />
+      <p>{props.todo}</p>
     </div>
   );
 };
