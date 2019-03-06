@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable class-methods-use-this */
@@ -17,10 +18,10 @@ class App extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(id) {
+  handleChange(key) {
     this.setState(prevState => {
       const updateTodos = prevState.todos.map(todo => {
-        if (todo.key === id) {
+        if (todo.key === key) {
           todo.completed = !todo.completed;
         }
         return todo;
@@ -38,7 +39,7 @@ class App extends React.Component {
         {this.state.todos.map(item => (
           <TodoItem
             todo={item.target}
-            id={item.key}
+            key={item.key}
             completed={item.completed}
             changeEvent={this.handleChange}
           />
