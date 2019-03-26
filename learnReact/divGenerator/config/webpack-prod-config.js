@@ -27,7 +27,6 @@ module.exports = merge(common, {
   },
   plugins: [
     // Uglify to minify your JavaScript
-    new UglifyJSPlugin(),
     // Set process.env.NODE_ENV to production
     new webpack.DefinePlugin({
       "process.env": {
