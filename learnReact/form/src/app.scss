@@ -1,0 +1,44 @@
+.button {
+  padding: 10px 16px;
+  font-size: 18px;
+  line-height: 1.3333333;
+  border-radius: 6px;
+
+  display: inline-block;
+  white-space: nowrap;
+  vertical-align: middle;
+  user-select: none;
+  background-image: none;
+  border: 1px solid transparent;
+  margin-top: 5px;
+}
+
+.buttonSuccess {
+  color: #fff;
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+}
+
+.buttonReset {
+  color: #fff;
+  background-color: #d9534f;
+  border-color: #d43f3a;
+}
+
+.title {
+  font-size: 36px;
+  margin: .67em 0;
+  font-family: inherit;
+  font-weight: 500;
+  line-height: 1.1;
+  color: inherit;
+}
+
+.h2 {
+  font-size: 30px;
+}
+
+.main {
+  text-align: center;
+  font-family: "Pridi", serif;
+}
