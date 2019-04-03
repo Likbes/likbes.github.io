@@ -63,3 +63,9 @@
     margin-top: 15px;
   }
 }
+
+@media(max-width: 760px) {
+  .quoteBlock {
+    width: auto;
+  }
+}

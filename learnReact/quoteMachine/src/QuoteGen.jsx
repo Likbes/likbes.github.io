@@ -41,13 +41,13 @@ class QuoteGen extends React.Component {
 
   getTweet() {
     let tweet = '';
+    const left = (screen.width - 800) / 2;
     const { quote, author } = this.state;
     if (author.length === 0) {
       tweet = quote;
     } else {
       tweet = `${quote.substr(0, 100)} — ${author}`;
     }
-    const left = (screen.width - 800) / 2;
     window.open(
       `http://twitter.com/home?status=${tweet} @freecodecamp`,
       '',
