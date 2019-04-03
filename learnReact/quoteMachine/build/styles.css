@@ -43,3 +43,7 @@
   .app__quoteBlock___EwsMz .app__author___2q_ml {
     color: #ffc952;
     margin-top: 15px; }
+
+@media (max-width: 760px) {
+  .app__quoteBlock___EwsMz {
+    width: auto; } }
