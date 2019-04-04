@@ -124,3 +124,32 @@
 
 .app__gameEnd___12hF2 button:focus {
   outline: none; }
+
+@media (max-width: 526px) {
+  body {
+    min-width: auto;
+    overflow: hidden; }
+  .app__container___2xPNi {
+    width: auto; }
+    .app__container___2xPNi .app__gameBox___3C6Lc {
+      width: 110px;
+      height: 105px;
+      font-size: 90px; }
+  .app__gameEnd___12hF2 h1 {
+    font-size: 70px;
+    margin-bottom: 50px; }
+  .app__gameEnd___12hF2 .app__replay___GWmd3 {
+    font-size: 40px; } }
+
+@media (max-width: 400px) {
+  .app__selectPlayer___1I8At .app__sides___lgRSx .app__chooseSide___lXXw9 {
+    margin: 10px;
+    font-size: 120px;
+    width: 145px;
+    height: 135px; }
+  .app__selectPlayer___1I8At p {
+    margin-top: 55px; }
+  .app__container___2xPNi .app__gameBox___3C6Lc {
+    width: 90px;
+    height: 87px;
+    font-size: 70px; } }
