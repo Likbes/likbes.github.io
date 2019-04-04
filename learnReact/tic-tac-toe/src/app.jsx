@@ -560,15 +560,21 @@ class App extends React.Component {
         <SelectPlayer handleSelect={this.handleSelect} />
         <ResultsContainer replay={this.replay} result={result} />
         <div className={style.container}>
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(elem => {
+          {[[1, 2, 3], [4, 5, 6], [7, 8, 9]].map(list => {
             return (
-              <div
-                className={style.gameBox}
-                id={elem}
-                role="button"
-                key={elem}
-                onClick={this.handlePlay.bind(this, elem)}
-              />
+              <div className={style.line} key={list}>
+                {list.map(elem => {
+                  return (
+                    <div
+                      className={style.gameBox}
+                      id={elem}
+                      role="button"
+                      key={elem}
+                      onClick={this.handlePlay.bind(this, elem)}
+                    />
+                  );
+                })}
+              </div>
             );
           })}
         </div>
