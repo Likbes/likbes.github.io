@@ -1,4 +1,4 @@
-.selectPlayer {
+.app__selectPlayer___1I8At {
   position: absolute;
   left: 0;
   top: 0;
@@ -7,17 +7,15 @@
   background: rgba(30, 30, 30, 0.95);
   color: #FFFFF2;
   font-size: 45px;
-  font-family: "Baloo Bhai", cursive;
-}
+  font-family: "Baloo Bhai", cursive; }
 
-.selectPlayer p {
+.app__selectPlayer___1I8At p {
   margin-bottom: -15px;
   margin-top: 105px;
   color: #f94e3f;
-  font-size: 65px;
-}
+  font-size: 65px; }
 
-.selectPlayer .sides {
+.app__selectPlayer___1I8At .app__sides___lgRSx {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -27,10 +25,9 @@
   flex-direction: row;
   -webkit-box-pack: center;
   -ms-flex-pack: center;
-  justify-content: center;
-}
+  justify-content: center; }
 
-.selectPlayer .sides .chooseSide {
+.app__selectPlayer___1I8At .app__sides___lgRSx .app__chooseSide___lXXw9 {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -48,16 +45,14 @@
   height: 165px;
   font-size: 150px;
   margin: 25px;
-  padding-top: 10px;
-}
+  padding-top: 10px; }
 
-.selectPlayer .sides .chooseSide:hover {
+.app__selectPlayer___1I8At .app__sides___lgRSx .app__chooseSide___lXXw9:hover {
   color: #f94e3f;
   background: #0a3c64;
-  cursor: pointer;
-}
+  cursor: pointer; }
 
-.container {
+.app__container___2xPNi {
   margin: 50px auto;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -72,10 +67,9 @@
   -ms-flex-pack: center;
   justify-content: center;
   width: 525px;
-  background: #07324B;
-}
+  background: #07324B; }
 
-.container .gameBox {
+.app__container___2xPNi .app__gameBox___3C6Lc {
   background: #1e1e1e;
   width: 150px;
   height: 142px;
@@ -92,15 +86,13 @@
   font-size: 125px;
   font-family: "Baloo Bhai", cursive;
   padding-top: 8px;
-  color: #f94e3f;
-}
+  color: #f94e3f; }
 
-.container .gameBox:hover {
+.app__container___2xPNi .app__gameBox___3C6Lc:hover {
   background: #282828;
-  cursor: pointer;
-}
+  cursor: pointer; }
 
-.gameEnd {
+.app__gameEnd___12hF2 {
   position: absolute;
   left: 0;
   top: 0;
@@ -108,17 +100,15 @@
   height: 100%;
   background: rgba(30, 30, 30, 0.95);
   color: #FFFFF2;
-  font-size: 45px;
-}
+  font-size: 45px; }
 
-.gameEnd h1 {
+.app__gameEnd___12hF2 h1 {
   margin-bottom: -10px;
   margin-top: 90px;
   color: #ffc952;
-  font-size: 100px;
-}
+  font-size: 100px; }
 
-.gameEnd .replay {
+.app__gameEnd___12hF2 .app__replay___GWmd3 {
   font-size: 60px;
   margin-top: 10px;
   padding: 10px 35px;
@@ -126,14 +116,11 @@
   background: #07324B;
   color: #f94e3f;
   border-radius: 15px;
-  border: none;
-}
+  border: none; }
 
-.gameEnd .replay:hover {
+.app__gameEnd___12hF2 .app__replay___GWmd3:hover {
   cursor: pointer;
-  background: #0a3c64;
-}
+  background: #0a3c64; }
 
-.gameEnd button:focus {
-  outline: none;
-}
+.app__gameEnd___12hF2 button:focus {
+  outline: none; }
