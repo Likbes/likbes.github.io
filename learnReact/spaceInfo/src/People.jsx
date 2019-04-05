@@ -13,7 +13,7 @@ class People extends React.Component {
   }
 
   componentDidMount() {
-    fetch('//api.open-notify.org/astros.json')
+    fetch('http//api.open-notify.org/astros.json')
       .then(data => data.json())
       .then(data => {
         const peoples = data.people.reduce((prev, cur) => {
