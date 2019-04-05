@@ -25,7 +25,7 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-    fetch('//api.open-notify.org/iss-now.json')
+    fetch('http//api.open-notify.org/iss-now.json')
       .then(data => data.json())
       .then(data => {
         this.unix(data);
@@ -61,7 +61,7 @@ class App extends React.Component {
       position[0] = currLat;
       position[1] = currLon;
 
-      fetch('//api.open-notify.org/iss-now.json')
+      fetch('http//api.open-notify.org/iss-now.json')
         .then(data => data.json())
         .then(data => {
           this.unix(data);
