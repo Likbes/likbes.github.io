@@ -1,6 +1,90 @@
-.app__app___26Cqk {
-  color: #e90e69;
-  font-size: 2rem;
-  text-align: center; }
-  .app__app___26Cqk span {
-    font-size: 40px; }
+body {
+  background: linear-gradient(#33E3FC, #47b8e0) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  font-family: "Montserrat", sans-serif;
+  color: #3f4040;
+  text-align: center;
+  padding: 0;
+  margin: 0; }
+
+.weather__title___3365j {
+  margin-top: 45px;
+  margin-bottom: -5px;
+  font-size: 50px;
+  color: #f94e3f; }
+
+.weather__conditions___1sWX- {
+  font-size: 25px;
+  margin-bottom: 5px; }
+
+.weather__weather___1eQGP {
+  font-size: 40px;
+  margin-top: -5px;
+  margin-bottom: 5px; }
+
+img {
+  width: 150px;
+  margin-top: 20px;
+  margin-bottom: -25px; }
+
+.weather__temperature___2dX5u {
+  font-size: 55px;
+  margin-bottom: 0; }
+
+.weather__toggleTemp___1fYnj {
+  width: 225px;
+  margin: -25px auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between; }
+
+.weather__toggleTemp___1fYnj div {
+  font-family: "Pridi", serif; }
+
+.weather__toggleTemp___1fYnj div p:hover {
+  color: #f94e3f;
+  cursor: pointer; }
+
+.weather__data___1hUVx {
+  margin-top: 20px; }
+
+.weather__resetBtn___KBBRX {
+  border: none;
+  color: #404040;
+  background: none;
+  padding: 10px 7px;
+  margin-top: 20px;
+  font-family: "Pridi", serif; }
+
+.weather__coordinates___zd07_,
+.weather__city___2iVDX {
+  font-size: 22px;
+  margin: 5px 0 5px 0; }
+
+.weather__credits___37wiJ {
+  position: fixed;
+  bottom: 0;
+  height: 35px;
+  width: 100%;
+  background: rgba(39, 41, 50, 0.85);
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
+.weather__credits___37wiJ p {
+  font-size: 16px;
+  text-align: center;
+  color: #c8c8c8; }
+
+.weather__credits___37wiJ a,
+.weather__credits___37wiJ a:visited {
+  color: #c8c8c8;
+  text-decoration: none; }
+
+.weather__credits___37wiJ a:hover {
+  color: #f94e3f;
+  text-decoration: underline; }
