@@ -64,7 +64,7 @@ module.exports = merge(common, {
           }
           // Add additional loaders here. (e.g. sass-loader)
         ]
-      }
+      },
     ]
   }
 });
