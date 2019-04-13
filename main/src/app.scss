@@ -1,7 +1,20 @@
 .vanilla {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.title,
+.subTitle {
+  font-size: 70px;
+  text-align: center;
+  text-transform: uppercase;
+  color: #00dffc;
+}
+
+.subTitle {
+  font-size: 40px;
 }
 
 .block {
@@ -9,6 +22,7 @@
   display: flex;
   flex-direction: column;
   width: 300px;
+  margin-top: 30px;
   color: #000;
   text-decoration: none;
 
@@ -59,6 +73,11 @@
     margin: 0 auto;
   }
 
+  .longName {
+    font-size: 40px;
+    top: 160px;
+  }
+
   .descr {
     transition: all ease-in-out .3s;
     position: absolute;
@@ -81,12 +100,18 @@
 
   .name {
     transition: all ease-in-out .4s;
-    top: 340px;
+    top: 345px;
     font-size: 35px;
   }
 
   .descr {
     transition: all ease-in-out .2s;
     opacity: 0;
+  }
+}
+
+@media(max-width: 369px) {
+  .title {
+    font-size: 50px;
   }
 }
