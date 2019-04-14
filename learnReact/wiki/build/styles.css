@@ -112,3 +112,12 @@ a:hover {
 .app__resultBox___1HDQq .app__infoCol___uPIl_:hover {
   cursor: pointer;
   background: rgba(39, 41, 50, 0.85); }
+
+@media (max-width: 400px) {
+  .app__range___OJ7tT,
+  .app__inputBox___3C0v9 {
+    width: 80%; }
+  button {
+    margin-top: 15px; }
+  .app__resultBox___1HDQq .app__titleCol___3ftVO {
+    width: 75px; } }

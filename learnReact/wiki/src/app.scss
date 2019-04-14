@@ -133,3 +133,21 @@ a:hover {
   cursor: pointer;
   background: rgba(39, 41, 50, 0.85);
 }
+
+@media(max-width: 400px) {
+
+  .range,
+  .inputBox {
+    width: 80%;
+  }
+
+  button {
+    margin-top: 15px;
+  }
+
+  .resultBox {
+    .titleCol {
+      width: 75px;
+    }
+  }
+}
