@@ -1,6 +1,7 @@
 /* eslint-disable react/prefer-stateless-function */
 import React from 'react';
 import { hot } from 'react-hot-loader';
+import ResultsContainer from './ResultsContainer';
 import style from './app.scss';
 
 class App extends React.Component {
@@ -9,6 +10,7 @@ class App extends React.Component {
     this.state = {
       text: '',
       range: 3,
+      data: [],
     };
     this.searchWiki = this.searchWiki.bind(this);
     this.handleRange = this.handleRange.bind(this);
@@ -18,10 +20,21 @@ class App extends React.Component {
     e.preventDefault();
     const { text: search, range: limit } = this.state;
     // eslint-disable-next-line max-len
-    const url = `https://en.wikipedia.org/w/api.php?action=opensearch&search=${search}&limit=${limit}&format=json`;
+    const url = `https://en.wikipedia.org/w/api.php?action=opensearch&search=${search}&limit=${limit}&format=json&origin=*`;
     fetch(url)
       .then(data => data.json())
-      .then(data => console.log(data));
+      .then(data => {
+        const { range } = this.state;
+        const finalData = [];
+
+        for (let i = 0; i < range; i += 1) {
+          const title = data[1][i];
+          const info = data[2][i];
+          const link = data[3][i];
+          finalData.push({ title, info, link });
+        }
+        this.setState({ data: finalData });
+      });
   }
 
   handleRange(e) {
@@ -31,7 +44,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { text, range } = this.state;
+    const { text, range, data } = this.state;
     return (
       <>
         <h1 className={style.title}>Wikipedia Viewer</h1>
@@ -65,6 +78,7 @@ class App extends React.Component {
           <input
             type="range"
             name="range"
+            value={range}
             min="3"
             max="50"
             className={style.range}
@@ -72,6 +86,7 @@ class App extends React.Component {
           />
           <span className={style.counter}>count: {range}</span>
         </div>
+        <ResultsContainer data={data} />
       </>
     );
   }
