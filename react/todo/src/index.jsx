@@ -1,5 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './app';
+import { Provider } from 'react-redux';
+import App from './App';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import store from './store';
+
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  // eslint-disable-next-line prettier/prettier
+  document.getElementById('root')
+);
