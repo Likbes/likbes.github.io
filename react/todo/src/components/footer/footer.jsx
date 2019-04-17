@@ -20,14 +20,15 @@ const FILTER_BTN = [
   },
 ];
 
-const Footer = ({ amount, activeFilter = 'all' }) => (
+const Footer = ({ amount, activeFilter = 'all', changeFilter }) => (
   <div className={style.footer}>
     <span className={style.amount}>{amount} tasks left</span>
-    <div className={style.btnGround}>
+    <div className={style.btnGroup}>
       {FILTER_BTN.map(({ text, id }) => (
         <button
           key={id}
           type="button"
+          onClick={() => changeFilter(id)}
           className={
             id === activeFilter
               ? classnames(style.filterBtn, style.active)
@@ -44,10 +45,13 @@ const Footer = ({ amount, activeFilter = 'all' }) => (
 Footer.propTypes = {
   amount: PropTypes.number.isRequired,
   activeFilter: PropTypes.string,
+  changeFilter: PropTypes.func,
 };
 
 Footer.defaultProps = {
   activeFilter: 'all',
+  // eslint-disable-next-line prettier/prettier
+  changeFilter: () => { },
 };
 
 export default hot(module)(Footer);

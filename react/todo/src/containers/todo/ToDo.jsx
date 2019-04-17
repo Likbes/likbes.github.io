@@ -5,6 +5,9 @@ import { connect } from 'react-redux';
 import { hot } from 'react-hot-loader';
 
 import { addTask } from '../../actions/actionCreators';
+import { removeTask } from '../../actions/actionCreators';
+import { completeTask } from '../../actions/actionCreators';
+import { changeFilter } from '../../actions/actionCreators';
 
 import ToDoInput from '../../components/todoInput/todoInput';
 import ToDoList from '../../components/todoList/todoList';
@@ -16,7 +19,6 @@ class ToDo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeFilters: 'all',
       taskText: '',
     };
   }
@@ -41,10 +43,27 @@ class ToDo extends React.Component {
     }
   }
 
+  filterTasks = (tasks, activeFilter) => {
+    switch (activeFilter) {
+      case 'completed':
+        return tasks.filter(t => t.isCompleted);
+      case 'active':
+        return tasks.filter(t => !t.isCompleted);
+      default:
+        return tasks;
+    }
+  }
+
+  getActiveTasksCounter = tasks => {
+    return tasks.filter(task => !task.isCompleted).length;
+  }
+
   render() {
-    const { activeFilters, taskText } = this.state;
-    const { tasks } = this.props;
+    const { taskText } = this.state;
+    const { tasks, filters, removeTask, completeTask, changeFilter } = this.props;
     const isTasksExist = tasks && tasks.length > 0;
+    const filteredTasks = this.filterTasks(tasks, filters);
+    const taskCounter = this.getActiveTasksCounter(tasks);
 
     return (
       <div className={style.todoWrapper}>
@@ -53,9 +72,19 @@ class ToDo extends React.Component {
           onKeyPress={this.addTaskHandler}
           value={taskText}
         />
-        {isTasksExist && <ToDoList tasksList={tasks} />}
         {isTasksExist && (
-          <Footer amount={tasks.length} activeFilters={activeFilters} />
+          <ToDoList
+            tasksList={filteredTasks}
+            removeTask={removeTask}
+            completeTask={completeTask}
+          />
+        )}
+        {isTasksExist && (
+          <Footer
+            amount={taskCounter}
+            activeFilter={filters}
+            changeFilter={changeFilter}
+          />
         )}
       </div>
     );
@@ -64,8 +93,9 @@ class ToDo extends React.Component {
 
 export default hot(module)(
   connect(
-    state => ({
-      tasks: state.tasks,
+    ({ tasks, filters }) => ({
+      tasks,
+      filters,
       // eslint-disable-next-line prettier/prettier
-    }), { addTask })(ToDo)
+    }), { addTask, removeTask, completeTask, changeFilter })(ToDo)
 );
