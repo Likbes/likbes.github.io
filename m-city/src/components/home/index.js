@@ -1,6 +1,6 @@
 import React from 'react';
-import Featured from './featured/index';
-import Matches from './matches/index';
+import Featured from './featured';
+import Matches from './matches';
 
 const Home = () => {
   return (

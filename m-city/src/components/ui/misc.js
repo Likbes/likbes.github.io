@@ -28,3 +28,24 @@ export const Tag = props => {
   }
   return temp;
 };
+
+export const firebaseLooper = snapshot => {
+  const data = [];
+  snapshot.forEach(childSnapshot => {
+    data.push({
+      ...childSnapshot.val(),
+      id: childSnapshot.key,
+    });
+  });
+  return data;
+};
+
+export const reverseArray = array => {
+  let reverseArray = [];
+
+  for (let i = array.length - 1; i >= 0; i--) {
+    reverseArray.push(array[i]);
+  }
+
+  return reverseArray;
+};
