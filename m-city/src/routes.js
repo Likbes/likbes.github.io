@@ -3,7 +3,7 @@ import Layout from './hoc/Layout';
 import { Switch, Route } from 'react-router-dom';
 import Home from './components/home/index';
 
-const Routes = props => {
+const Routes = () => {
   return (
     <Layout>
       <Switch>

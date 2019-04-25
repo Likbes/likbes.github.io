@@ -57,6 +57,7 @@ export default class Stripes extends Component {
               rotate: [rotate],
               events: {
                 end() {
+                  // eslint-disable-next-line no-console
                   console.log('anim finished');
                 }
               },

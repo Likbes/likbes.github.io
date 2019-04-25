@@ -1,9 +1,13 @@
 import React from 'react';
 import Featured from './featured/index';
+import Matches from './matches/index';
 
 const Home = () => {
   return (
-    <div className="bck_blue"><Featured /></div>
+    <div className="bck_blue">
+      <Featured />
+      <Matches />
+    </div>
   );
 };
 
