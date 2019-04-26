@@ -164,7 +164,7 @@ footer .footer_discl {
 .featured_wrapper {
   margin: 0 auto;
   width: 1280px;
-  height: 800px;
+  height: 720px;
   overflow: hidden;
 }
 
@@ -228,7 +228,6 @@ footer .footer_discl {
 .home_matches_wrapper .home_matches {
   flex-wrap: wrap;
   display: flex;
-  margin-top: 60px;
 }
 
 .home_matches_wrapper .home_matches .item {
@@ -267,8 +266,8 @@ footer .footer_discl {
   padding: 10px;
 }
 
-.match_block .match_wrapper .match_top .left div,
-.match_block .match_wrapper .match_bottom .left div {
+.match_block .match_wrapper .match_top .left *,
+.match_block .match_wrapper .match_bottom .left * {
   float:left
 }
 
@@ -305,7 +304,6 @@ footer .footer_discl {
 }
 
 .match_box_big .block_wraper {
-  display: inline-block;
   margin-right: 50px;
   float: left;
 }

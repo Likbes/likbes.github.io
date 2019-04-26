@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import Slide from 'react-reveal/Slide';
 import { firebaseMatches } from '../../../firebase';
 import { firebaseLooper, reverseArray } from '../../ui/misc';
+
+import MatchesBlock from '../../ui/matches_block';
 export default class Blocks extends Component {
 
   state = {
@@ -16,17 +19,24 @@ export default class Blocks extends Component {
     });
   }
 
-  showMatches = () => (
-    <div>
-      match
-    </div>
+  showMatches = (matches) => (
+    matches ?
+      matches.map(match => (
+        <Slide bottom key={match.id}>
+          <div className="item">
+            <div className="wrapper">
+              <MatchesBlock match={match} />
+            </div>
+          </div>
+        </Slide>
+      )) :
+      null
   )
 
   render() {
     const { matches } = this.state;
-    console.log(matches);
     return (
-      <div className="home-_matches">
+      <div className="home_matches">
         {this.showMatches(matches)}
       </div>
     );
