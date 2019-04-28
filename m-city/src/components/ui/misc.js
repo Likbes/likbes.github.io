@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+// create a title or link
 export const Tag = props => {
   const { link, linkTo, bck, size, color, add, children } = props;
   const temp = (
@@ -12,6 +13,7 @@ export const Tag = props => {
         padding: '5px',
         display: 'inline-block',
         fontFamily: 'Righteous',
+        // additional styles
         ...add,
       }}
     >
@@ -29,6 +31,7 @@ export const Tag = props => {
   return temp;
 };
 
+// get data from firebase
 export const firebaseLooper = snapshot => {
   const data = [];
   snapshot.forEach(childSnapshot => {
@@ -48,4 +51,27 @@ export const reverseArray = array => {
   }
 
   return reverseArray;
+};
+
+
+export const validate = element => {
+  // [valid?, message]
+  let error = [true, ''];
+  const { validation, value } = element;
+
+  // is a valid email
+  if (validation.email) {
+    const valid = /\S+@\S+\.\S+/.test(value);
+    const message = `${!valid ? 'Must be a valid email' : ''}`;
+    error = !valid ? [valid, message] : error;
+  }
+
+  // is a field empty
+  if (validation.required) {
+    const valid = value.trim() !== '';
+    const message = `${!valid ? 'This field is required' : ''}`;
+    error = !valid ? [valid, message] : error;
+  }
+
+  return error;
 };
