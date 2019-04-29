@@ -8,10 +8,14 @@ import PublicRoute from './components/authRoutes/publicRoutes';
 
 import Home from './components/home';
 import SignIn from './components/signIn';
+import Team from './components/team';
+import Matches from './components/matches';
 
 import Dashboard from './components/admin/Dashboard';
 import AdminMatches from './components/admin/matches';
 import EditMatch from './components/admin/editMatch';
+import AdminPlayers from './components/admin/players';
+import EditPlayer from './components/admin/editPlayer';
 
 const Routes = ({ user }) => {
   return (
@@ -26,13 +30,31 @@ const Routes = ({ user }) => {
         />
 
         <PublicRoute
+          exact
           restricted
           user={user}
           path="/sign_in"
           component={SignIn}
         />
 
+        <PublicRoute
+          exact
+          restricted={false}
+          user={user}
+          path="/the_team"
+          component={Team}
+        />
+
+        <PublicRoute
+          exact
+          restricted={false}
+          user={user}
+          path="/the_matches"
+          component={Matches}
+        />
+
         <PrivateRoute
+          exact
           user={user}
           path="/dashboard"
           component={Dashboard}
@@ -57,6 +79,27 @@ const Routes = ({ user }) => {
           exact
           path={'/admin_matches/edit_match/:id'}
           component={EditMatch}
+        />
+
+        <PrivateRoute
+          user={user}
+          exact
+          path={'/admin_players'}
+          component={AdminPlayers}
+        />
+
+        <PrivateRoute
+          user={user}
+          exact
+          path={'/admin_players/edit_player'}
+          component={EditPlayer}
+        />
+
+        <PrivateRoute
+          user={user}
+          exact
+          path={'/admin_players/edit_player/:id'}
+          component={EditPlayer}
         />
       </Switch>
     </Layout>

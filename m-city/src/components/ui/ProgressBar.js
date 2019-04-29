@@ -4,7 +4,10 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 const ProgressBar = ({ isLoading }) => {
   return (
-    <div className="admin_progress">
+    <div
+      className="admin_progress"
+      style={{ textAlign: 'center', margin: '0 30px' }}
+    >
       {
         isLoading ?
           <CircularProgress

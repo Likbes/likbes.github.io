@@ -185,9 +185,9 @@ export default class EditMatch extends Component {
     });
   }
 
-  successForm(mess) {
+  successForm(message) {
     this.setState({
-      formSuccess: mess,
+      formSuccess: message,
     });
 
     setTimeout(() => {
