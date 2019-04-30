@@ -15,8 +15,8 @@ export default class Team extends Component {
     players: [],
     categories: [
       'Keeper',
-      'Midfield',
       'Defence',
+      'Midfield',
       'Striker'
     ]
   }

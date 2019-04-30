@@ -304,7 +304,7 @@ footer .footer_discl {
   clear: both;
 }
 
-.match_box_big .block_wraper {
+.match_box_big .block_wrapper {
   margin-right: 50px;
   float: left;
 }
@@ -331,7 +331,7 @@ footer .footer_discl {
   font-weight: 500;
 }
 
-.block_wraper.nfo {
+.block_wrapper.nfo {
   border-left: 1px solid #98c6e9;
   height: 102px;
   padding-left: 10px;
@@ -339,8 +339,8 @@ footer .footer_discl {
   color: #5e5e5e;
 }
 
-.block_wraper.nfo div {
-  margin: 5px 0px;
+.block_wrapper.nfo p {
+  margin: 12px 0px;
 }
 
 .match_filters {
@@ -354,10 +354,13 @@ footer .footer_discl {
   color: #656565;
 }
 .match_filters .option {
+  color: #000;
+  border: none;
   background: #ffffff;
   padding: 5px 9px;
   border-radius: 3px;
   font-size: 13px;
+  font-weight: bold;
   margin-right: 5px;
   cursor: pointer;
 }

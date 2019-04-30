@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+
 import ProgressBar from '../ui/ProgressBar';
+import Filters from './Filters';
 import LeagueTable from './Table';
 import MatchesList from './MatchesList';
 
@@ -37,7 +39,9 @@ export default class Matches extends Component {
         <div className="the_matches_wrapper">
           <div className="left">
             <div className="match_filters">
+              <Filters
 
+              />
             </div>
             {
               !isLoading ?
