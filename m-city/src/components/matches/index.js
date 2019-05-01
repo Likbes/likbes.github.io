@@ -14,8 +14,35 @@ export default class Matches extends Component {
     isLoading: true,
     matches: [],
     filterMatches: [],
-    playerFilter: 'All',
+    playedFilter: 'All',
     resultFilter: 'All',
+  }
+
+  showPlayed = filter => {
+    const { matches } = this.state;
+    let filterMatches = matches.filter(match => {
+      return match.final === filter;
+    });
+    if (filter === 'All') filterMatches = matches;
+    this.setState({
+      filterMatches,
+      playedFilter: filter,
+      resultFilter: 'All'
+    });
+  }
+
+  showResult = result => {
+    const { matches } = this.state;
+
+    let resultMatches = matches.filter(match => {
+      return match.result === result;
+    });
+    if (result === 'All') resultMatches = matches;
+    this.setState({
+      filterMatches: resultMatches,
+      resultFilter: result,
+      playedFilter: 'All',
+    });
   }
 
   componentDidMount() {
@@ -33,16 +60,23 @@ export default class Matches extends Component {
   }
 
   render() {
-    const { isLoading, filterMatches } = this.state;
+    const {
+      isLoading,
+      filterMatches,
+      playedFilter,
+      resultFilter
+    } = this.state;
+
     return (
       <div className="the_matches_container">
         <div className="the_matches_wrapper">
           <div className="left">
-            <div className="match_filters">
-              <Filters
-
-              />
-            </div>
+            <Filters
+              showPlayed={this.showPlayed}
+              playedFilter={playedFilter}
+              showResult={this.showResult}
+              resultFilter={resultFilter}
+            />
             {
               !isLoading ?
                 <MatchesList matches={filterMatches} /> :

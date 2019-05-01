@@ -10,6 +10,7 @@ import Home from './components/home';
 import SignIn from './components/signIn';
 import Team from './components/team';
 import Matches from './components/matches';
+import NotFound from './components/ui/notFound';
 
 import Dashboard from './components/admin/Dashboard';
 import AdminMatches from './components/admin/matches';
@@ -100,6 +101,12 @@ const Routes = ({ user }) => {
           exact
           path={'/admin_players/edit_player/:id'}
           component={EditPlayer}
+        />
+
+        <PublicRoute
+          restricted={false}
+          user={user}
+          component={NotFound}
         />
       </Switch>
     </Layout>

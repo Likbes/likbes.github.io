@@ -123,5 +123,5 @@ export default class MatchesList extends Component {
 }
 
 MatchesList.propTypes = {
-  matches: PropTypes.object,
+  matches: PropTypes.array,
 };

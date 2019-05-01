@@ -10,6 +10,13 @@ import { Promise } from 'core-js';
 
 export default class Team extends Component {
 
+  constructor(props) {
+    super(props);
+    // fix the scroll position when you click to the link button 
+    // in react router
+    window.scrollTo(0, 0);
+  }
+
   state = {
     isLoading: true,
     players: [],

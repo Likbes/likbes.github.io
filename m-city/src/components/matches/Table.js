@@ -43,10 +43,10 @@ class LeagueTable extends Component {
         <TableRow key={i}>
           <TableCell style={style.cell}>{i + 1}</TableCell>
           <TableCell style={style.cell}>{pos.team}</TableCell>
-          <TableCell numeric style={style.cell}>{pos.w}</TableCell>
-          <TableCell numeric style={style.cell}>{pos.d}</TableCell>
-          <TableCell numeric style={style.cell}>{pos.l}</TableCell>
-          <TableCell numeric style={style.cell}>{pos.pts}</TableCell>
+          <TableCell align="center" style={style.cell}>{pos.w}</TableCell>
+          <TableCell align="center" style={style.cell}>{pos.d}</TableCell>
+          <TableCell align="center" style={style.cell}>{pos.l}</TableCell>
+          <TableCell align="center" style={style.cell}>{pos.pts}</TableCell>
         </TableRow>
       ))
       : ''

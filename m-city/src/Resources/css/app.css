@@ -130,7 +130,7 @@ button {
   margin-top: 96px;
   padding: 20px;
   background-size: 5px 5px !important;
-  min-height: 100vh;
+  min-height: calc(100vh - 150px * 2);
   text-align: center;
   font-size: 90px;
   font-family: 'Righteous', cursive;
@@ -520,6 +520,7 @@ footer .footer_discl {
 
 .the_matches_container {
   margin-top: 96px;
+  min-height: 720px;
 }
 
 .the_matches_wrapper {
