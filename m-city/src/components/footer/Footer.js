@@ -15,9 +15,8 @@ const Footer = () => {
       <div className="footer_discl">
         Manchester city 2019. All rights reserved.
       </div>
-
     </footer>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

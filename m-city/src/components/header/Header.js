@@ -35,13 +35,13 @@ export default class Header extends Component {
 
   handleScroll = () => {
     const { lastScroll: prevScroll, shouldShow: prevShouldShow } = this.state;
-    const lastScroll = window.scrollY;
+    const currScroll = window.scrollY;
 
-    if (lastScroll === prevScroll) {
+    if (currScroll === prevScroll) {
       return;
     }
 
-    const shouldShow = (prevScroll !== null) ? (lastScroll < prevScroll) : null;
+    const shouldShow = (prevScroll !== null && currScroll > 74) ? (currScroll < prevScroll) : null;
 
     if (shouldShow !== prevShouldShow) {
       this.setState(prevState => ({
@@ -50,7 +50,7 @@ export default class Header extends Component {
       }));
     }
 
-    this.setState({ lastScroll });
+    this.setState({ lastScroll: currScroll });
   }
 
   render() {

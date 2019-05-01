@@ -26,6 +26,7 @@ const TagButton = ({ children }) => (
       marginBottom: '27px',
       border: '1px solid #0e1731'
     }}
+    onClick={e => window.scrollTo(0, 0)}
   >{children}</Tag>
 );
 
