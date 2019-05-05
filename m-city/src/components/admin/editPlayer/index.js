@@ -80,6 +80,7 @@ export default class EditPlayer extends Component {
             { key: 'Defence', value: 'Defence' },
             { key: 'Midfield', value: 'Midfield' },
             { key: 'Striker', value: 'Striker' },
+            { key: 'Trainer', value: 'Trainer' },
           ],
         },
         validation: {

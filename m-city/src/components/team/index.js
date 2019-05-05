@@ -21,6 +21,7 @@ export default class Team extends Component {
     isLoading: true,
     players: [],
     categories: [
+      'Trainer',
       'Keeper',
       'Defence',
       'Midfield',
