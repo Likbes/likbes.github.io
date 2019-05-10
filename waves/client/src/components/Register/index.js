@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
+import Dialog from '@material-ui/core/Dialog';
 import FormField from '../utils/Form/formField';
 
 import { update, generateData, isFormValid } from '../utils/Form/formActions';
-import { connect } from 'react-redux';
-
-import { loginUser } from '../../store/actions/userActions';
+import { registerUser } from '../../store/actions/userActions';
 
 class Register extends Component {
 
   state = {
     formError: false,
-    formSuccess: '',
+    formSuccess: false,
     formdata: {
       name: {
         element: 'input',
@@ -63,7 +65,7 @@ class Register extends Component {
         value: '',
         config: {
           name: 'phone_input',
-          type: 'tel',
+          type: 'number',
           placeholder: 'Enter your phone',
         },
         validation: {
@@ -82,7 +84,7 @@ class Register extends Component {
           placeholder: 'Enter your password',
         },
         validation: {
-          required: true,
+          required: false,
         },
         valid: false,
         touched: false,
@@ -126,7 +128,27 @@ class Register extends Component {
     let formIsValid = isFormValid(formdata, 'register');
 
     if (formIsValid) {
-      console.log(dataToSubmit);
+      dispatch(registerUser(dataToSubmit))
+        .then(res => {
+          if (res.payload.success) {
+            this.setState({
+              formError: true,
+              formSuccess: true,
+            });
+            setTimeout(() => {
+              history.push('/login');
+            }, 2000);
+          } else {
+            this.setState({
+              formError: true,
+            });
+          }
+        })
+        .catch(() => {
+          this.setState({
+            formError: true,
+          });
+        });
     } else {
       this.setState({
         formError: true,
@@ -136,7 +158,7 @@ class Register extends Component {
 
   render() {
 
-    const { formError, formdata } = this.state;
+    const { formError, formdata, formSuccess } = this.state;
 
     return (
       <div className="page_wrapper">
@@ -215,9 +237,20 @@ class Register extends Component {
             </div>
           </div>
         </div>
+        <Dialog open={formSuccess}>
+          <div className="dialog_alert">
+            <h2>Congratulations!</h2>
+            <p>You will be directed to the LOGIN in a few seconds...</p>
+          </div>
+        </Dialog>
       </div>
     );
   }
 }
+
+Register.propTypes = {
+  history: PropTypes.object,
+  dispatch: PropTypes.func,
+};
 
 export default connect()(Register);
