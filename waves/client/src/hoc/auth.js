@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { auth } from '../store/actions/userActions';
+import { auth } from '../store/actions/user';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 export default function (ComposedClass, isPrivate, adminRoute = null) {

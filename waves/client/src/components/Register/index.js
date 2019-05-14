@@ -6,7 +6,7 @@ import Dialog from '@material-ui/core/Dialog';
 import FormField from '../utils/Form/formField';
 
 import { update, generateData, isFormValid } from '../utils/Form/formActions';
-import { registerUser } from '../../store/actions/userActions';
+import { registerUser } from '../../store/actions/user';
 
 class Register extends Component {
 

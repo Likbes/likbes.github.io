@@ -6,7 +6,7 @@ body {
 }
 
 .container {
-  width:1100px;
+  max-width:1100px;
   margin: 0 auto;
 }
 .page_container {
@@ -197,6 +197,7 @@ select {
   width: 100%;
   border: 1px solid #dcdcdc;
   padding: 5px 10px;
+  margin: 0;
   display: block;
   box-sizing: border-box;
   text-align: center;
@@ -335,6 +336,7 @@ footer .wrapper {
 footer .left,
 footer .right {
   flex: 1;
+  flex-wrap: wrap;
 }
 
 footer .business_nfo {
@@ -374,7 +376,7 @@ footer .business_nfo .nfo h4 {
 
 .featured_container .featured_action {
   position: absolute;
-  top: 45%;
+  top: 50%;
   left: 8%;
 }
 
@@ -382,6 +384,7 @@ footer .business_nfo .nfo h4 {
   background: #82828287;
   color: #ffffff;
   padding: 0px 20px;
+  margin: 10px 0;
   text-transform: uppercase;
   display: table;
 }
@@ -463,7 +466,7 @@ footer .business_nfo .nfo h4 {
 
 .card_item_wrapper {
   flex-grow: 1;
-  width: 25%;
+  min-width: 25%;
   padding: 0 20px;
   box-sizing: border-box;
   position: relative;
@@ -567,7 +570,7 @@ footer .business_nfo .nfo h4 {
 }
 
 /*============================
-      SHOP
+              SHOP
 ==============================*/
 
 .shop_wrapper {
@@ -579,10 +582,11 @@ footer .business_nfo .nfo h4 {
 }
 
 .shop_wrapper .right {
-  width: 800px;
+  flex-grow: 2.75;
 }
 
 .collapse_title span {
+  user-select: none;
   text-transform: uppercase;
   font-weight: 700;
 }

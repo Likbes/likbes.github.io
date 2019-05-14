@@ -6,7 +6,7 @@ import { update, generateData, isFormValid } from '../utils/Form/formActions';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { loginUser } from '../../store/actions/userActions';
+import { loginUser } from '../../store/actions/user';
 
 class LoginForm extends Component {
 

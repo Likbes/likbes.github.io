@@ -2,9 +2,20 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-const MyButton = (props) => {
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import faShoppingBag from '@fortawesome/fontawesome-free-solid/faShoppingBag';
 
-  const { type, linkTo, title, addStyles } = props;
+library.add(faShoppingBag);
+
+const MyButton = ({
+  type,
+  altClass,
+  linkTo,
+  title,
+  addStyles,
+  runAction
+}) => {
 
   const buttons = () => {
     let temp = '';
@@ -14,7 +25,9 @@ const MyButton = (props) => {
       case 'default':
         temp = (
           <Link
-            className="link_default"
+            className={
+              altClass ? altClass : 'link_default'
+            }
             to={linkTo}
             {...addStyles}
           >
@@ -22,6 +35,18 @@ const MyButton = (props) => {
           </Link>
         );
         break;
+
+      case 'bag_link':
+        temp = (
+          <button
+            className="bag_link"
+            onClick={runAction}
+          >
+            <FontAwesomeIcon icon="shopping-bag" />
+          </button>
+        );
+        break;
+
       default:
         temp = '';
     }
@@ -38,9 +63,11 @@ const MyButton = (props) => {
 
 MyButton.propTypes = {
   type: PropTypes.string,
+  altClass: PropTypes.string,
   linkTo: PropTypes.string,
   title: PropTypes.string,
   addStyles: PropTypes.object,
+  runAction: PropTypes.func,
 };
 
 export default MyButton;
