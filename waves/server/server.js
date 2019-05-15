@@ -147,6 +147,49 @@ app.get('/api/product/woods', (req, res) => {
 //                PRODUCTS
 //=====================================
 
+app.post('/api/product/shop', (req, res) => {
+  const {
+    order = 'desc',
+    sortBy = '_id',
+    limit = 100,
+    skip = 0,
+    filters
+  } = req.body;
+
+  const findArgs = {};
+
+  for (let key in filters) {
+    if (filters[key].length > 0) {
+      if (key === 'price') {
+        findArgs[key] = {
+          $gte: filters[key][0],
+          $lte: filters[key][1],
+        };
+      } else {
+        findArgs[key] = filters[key];
+      }
+    }
+  }
+
+  Product
+    .find(findArgs)
+    .populate('brand')
+    .populate('wood')
+    .sort([[sortBy, order]])
+    .skip(skip)
+    .limit(limit)
+    .exec((err, articles) => {
+      if (err) return res.status(400).send(err);
+
+      res.status(200).json({
+        size: articles.length,
+        articles,
+      });
+    });
+
+  res.status(200);
+});
+
 app.post('/api/product/article', auth, admin, (req, res) => {
   const product = new Product(req.body);
 

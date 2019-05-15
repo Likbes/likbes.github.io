@@ -41,7 +41,6 @@ class CollapseCheckbox extends Component {
             <ListItemSecondaryAction>
               <Checkbox
                 color="primary"
-                style={{ padding: '12px 5px' }}
                 onChange={this.handleToggle(item._id)}
                 checked={checked.indexOf(item._id) !== -1}
               />
@@ -95,7 +94,10 @@ class CollapseCheckbox extends Component {
         <List style={{ borderBottom: '1px solid #dbdbdb' }}>
           <ListItem
             onClick={this.handleClick}
-            style={{ padding: '10px 23x 10px 0', cursor: 'pointer' }}>
+            style={{
+              padding: '10px 23px 10px 0',
+              cursor: 'pointer'
+            }}>
             <ListItemText
               primary={title}
               className="collapse_title"

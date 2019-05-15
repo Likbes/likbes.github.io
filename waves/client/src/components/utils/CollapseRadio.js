@@ -69,7 +69,7 @@ export default class CollapseRadio extends Component {
             value={`${price._id}`}
             control={<Radio />}
             label={price.name}
-            style={{ margin: '0' }}
+            margin="none"
           />
         )) : ''
     );
@@ -80,11 +80,11 @@ export default class CollapseRadio extends Component {
     const { open, value } = this.state;
 
     return (
-      <div>
+      <div className="collapse_items_wrapper">
         <List style={{ borderBottom: '1px solid #dbdbdb' }}>
           <ListItem
             onClick={this.handleClick}
-            style={{ padding: '10px 23x 10px 0', cursor: 'pointer' }}>
+            style={{ padding: '10px 23px 10px 0', cursor: 'pointer' }}>
             <ListItemText
               primary={title}
               className="collapse_title"

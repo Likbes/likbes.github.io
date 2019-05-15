@@ -27,7 +27,7 @@ const Filters = ({
       />
 
       <CollapseCheckbox
-        initState
+        initState={false}
         title="Woods"
         list={woods}
         handleFilters={filters => handleFilters(filters, 'wood')}

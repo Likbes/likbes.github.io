@@ -4,6 +4,7 @@ import { PRODUCT_SERVER } from '../../components/utils/misc';
 import {
   GET_PRODUCTS_BY_ARRIVAL,
   GET_PRODUCTS_BY_SELL,
+  GET_PRODUCTS_TO_SHOP,
   GET_BRANDS,
   GET_WOODS
 } from './types';
@@ -26,6 +27,32 @@ export function getProductsBySell() {
 
   return {
     type: GET_PRODUCTS_BY_SELL,
+    payload: request,
+  };
+}
+
+export function getProductsToShop(
+  skip,
+  limit,
+  filters = [],
+  prevState = []
+) {
+  const data = {
+    limit,
+    skip,
+    filters,
+  };
+
+  const request = axios
+    .post(`${PRODUCT_SERVER}/shop`, data)
+    .then(res => {
+      const { size, articles } = res.data;
+
+      return { size, articles };
+    });
+
+  return {
+    type: GET_PRODUCTS_TO_SHOP,
     payload: request,
   };
 }
