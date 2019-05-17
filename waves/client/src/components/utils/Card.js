@@ -9,6 +9,7 @@ const Card = ({
   brand,
   name,
   price,
+  description,
   _id
 }) => {
 
@@ -39,31 +40,31 @@ const Card = ({
             <div className="price">
               ${price}
             </div>
-          </div>
 
-          {
-            grid ?
-              <div className="description">
-                descriptio
-              </div> : ''
-          }
-          <div className="actions">
-            <div className="button_wrapp">
-              <MyButton
-                type="default"
-                altClass="card_link"
-                title="View product"
-                linkTo={`/products/${_id}`}
-                addStyles={{
-                  margin: '10px 0 0 0',
-                }}
-              />
-            </div>
-            <div className="button_wrapp">
-              <MyButton
-                type="bag_link"
-                runAction={() => { }}
-              />
+            {
+              grid ?
+                <div className="description">
+                  {description}
+                </div> : ''
+            }
+            <div className="actions">
+              <div className="button_wrapp">
+                <MyButton
+                  type="default"
+                  altClass="card_link"
+                  title="View product"
+                  linkTo={`/products/${_id}`}
+                  addStyles={{
+                    margin: '10px 0 0 0',
+                  }}
+                />
+              </div>
+              <div className="button_wrapp">
+                <MyButton
+                  type="bag_link"
+                  runAction={() => { }}
+                />
+              </div>
             </div>
           </div>
         </div>

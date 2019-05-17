@@ -7,6 +7,8 @@ import { price } from '../utils/Form/fixedCategories';
 
 import PageTop from '../utils/PageTop';
 import Filters from './Filters';
+import Grids from './Grids';
+import Content from './Content';
 
 class Shop extends Component {
 
@@ -31,6 +33,14 @@ class Shop extends Component {
     dispatch(getProductsToShop(
       skip, limit, filters
     ));
+  }
+
+  handleGrid = () => {
+    this.setState(prevState => {
+      return {
+        grid: !prevState.grid ? 'grid_bars' : '',
+      };
+    });
   }
 
   handlePrice = value => {
@@ -74,8 +84,25 @@ class Shop extends Component {
     });
   }
 
+  loadMoreCards = () => {
+    const { dispatch, products } = this.props;
+    const { skip, limit, filters } = this.state;
+    let newSkip = skip + limit;
+
+    // products.toShop - old state to merge
+    dispatch(getProductsToShop(
+      newSkip, limit,
+      filters, products.toShop
+    )).then(() => {
+      this.setState({
+        skip: newSkip,
+      });
+    });
+  }
+
   render() {
     const { products, dispatch } = this.props;
+    const { grid, limit } = this.state;
 
     return (
       <>
@@ -88,7 +115,17 @@ class Shop extends Component {
               dispatch={dispatch}
             />
             <div className="right">
-              right
+              <Grids
+                grid={grid}
+                handleGrid={this.handleGrid}
+              />
+              <Content
+                grid={grid}
+                limit={limit}
+                size={products.toShopSize}
+                list={products.toShop}
+                loadMore={() => this.loadMoreCards()}
+              />
             </div>
           </div>
         </div>

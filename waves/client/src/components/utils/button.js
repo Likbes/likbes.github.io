@@ -39,7 +39,7 @@ const MyButton = ({
       case 'bag_link':
         temp = (
           <button
-            className="bag_link"
+            className="bag_link button"
             onClick={runAction}
           >
             <FontAwesomeIcon icon="shopping-bag" />

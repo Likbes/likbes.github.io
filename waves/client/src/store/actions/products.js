@@ -47,8 +47,12 @@ export function getProductsToShop(
     .post(`${PRODUCT_SERVER}/shop`, data)
     .then(res => {
       const { size, articles } = res.data;
+      let newState = [
+        ...prevState,
+        ...articles
+      ];
 
-      return { size, articles };
+      return { size, articles: newState };
     });
 
   return {
