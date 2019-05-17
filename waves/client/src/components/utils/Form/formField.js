@@ -3,13 +3,23 @@ import PropTypes from 'prop-types';
 
 const FormField = ({ formdata, change, id }) => {
 
+  const {
+    element,
+    config,
+    value,
+    showLabel = false,
+    validation,
+    valid,
+    validationMessage
+  } = formdata;
+
   const showError = () => {
     let errorMessage = '';
 
-    if (formdata.validation && !formdata.valid) {
+    if (validation && !valid) {
       errorMessage = (
         <div className="error_label">
-          {formdata.validationMessage}
+          {validationMessage}
         </div>
       );
     }
@@ -21,20 +31,60 @@ const FormField = ({ formdata, change, id }) => {
   const renderTemplate = () => {
     let formTemplate = '';
 
-    switch (formdata.element) {
+    switch (element) {
       case 'input':
         formTemplate = (
-          <div className="formBlock">
+          <>
             <input
-              {...formdata.config}
-              value={formdata.value}
+              {...config}
+              value={value}
               onBlur={e => change({ e, id, blur: true })}
               onChange={e => change({ e, id })}
             />
             {showError()}
-          </div>
+          </>
         );
         break;
+
+      case 'textarea':
+        formTemplate = (
+          <>
+            <textarea
+              {...config}
+              value={value}
+              onBlur={e => change({ e, id, blur: true })}
+              onChange={e => change({ e, id })}
+            />
+            {showError()}
+          </>
+        );
+        break;
+
+      case 'select':
+        formTemplate = (
+          <>
+            <select
+              value={value}
+              onBlur={e => change({ e, id, blur: true })}
+              onChange={e => change({ e, id })}
+            >
+              <option value="">Select a value</option>
+              {
+                config.options.map(item => (
+                  <option
+                    key={item.key}
+                    value={item.key}
+                  >
+                    {item.value}
+                  </option>
+                ))
+              }
+            </select>
+            {showError()}
+          </>
+        );
+        break;
+
       default:
         formTemplate = null;
     }
@@ -44,7 +94,13 @@ const FormField = ({ formdata, change, id }) => {
 
 
   return (
-    <div>
+    <div className="formBlock">
+      {
+        showLabel ?
+          <div className="label_inputs">
+            {config.label}
+          </div> : ''
+      }
       {renderTemplate()}
     </div>
   );

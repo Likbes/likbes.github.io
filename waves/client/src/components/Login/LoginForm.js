@@ -115,7 +115,11 @@ class LoginForm extends Component {
               </div> :
               ''
           }
-          <button onClick={e => this.submitForm(e)}>
+          <button
+            type="button"
+            className="button"
+            onClick={e => this.submitForm(e)}
+          >
             Log in
           </button>
         </form>

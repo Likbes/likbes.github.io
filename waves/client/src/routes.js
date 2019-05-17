@@ -10,9 +10,10 @@ import Register from './components/Register';
 import Shop from './components/Shop';
 
 import UserDashboard from './components/User';
+import AddProduct from './components/Admin/AddProduct';
 
 const Routes = () => {
-  // in routes:
+  // second arg in Auth comp:
   // null - see to auth and unregistered users; 
   // false - see only unregistered users
   // true - onlu registered
@@ -26,6 +27,7 @@ const Routes = () => {
         <Route path="/shop" component={Auth(Shop, null)} exact />
 
         <Route path="/user/dashboard" component={Auth(UserDashboard, true)} exact />
+        <Route path="/admin/add_product" exact component={Auth(AddProduct, true)} />
       </Switch>
     </Layout>
   );

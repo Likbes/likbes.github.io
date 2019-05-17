@@ -230,7 +230,11 @@ class Register extends Component {
                     </div> :
                     ''
                 }
-                <button onClick={e => this.submitForm(e)}>
+                <button
+                  type="button"
+                  className="button"
+                  onClick={e => this.submitForm(e)}
+                >
                   Create an account
                 </button>
               </form>

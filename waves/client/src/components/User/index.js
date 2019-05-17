@@ -7,7 +7,7 @@ const UserDashboard = ({ user }) => {
   const { userData } = user;
 
   return (
-    <UserLayout>
+    <UserLayout userData={userData}>
       <>
         <div className="user_nfo_panel">
           <h1>User information</h1>

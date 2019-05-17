@@ -8,7 +8,22 @@ const links = [
   { name: 'My cart', linkTo: '/user/cart' },
 ];
 
-const UserLayout = ({ children }) => {
+const admin = [
+  {
+    name: 'Site info',
+    linkTo: '/admin/site_info'
+  },
+  {
+    name: 'Add products',
+    linkTo: '/admin/add_product'
+  },
+  {
+    name: 'Manage categories',
+    linkTo: '/admin/manage_categories'
+  }
+];
+
+const UserLayout = ({ userData, children }) => {
 
   const generateLinks = (links) => {
     return links.map(link => (
@@ -26,6 +41,15 @@ const UserLayout = ({ children }) => {
           <div className="links">
             {generateLinks(links)}
           </div>
+          {userData.isAdmin ?
+            <div>
+              <h2>Admin</h2>
+              <div className="links">
+                {generateLinks(admin)}
+              </div>
+            </div>
+            : ''
+          }
         </div>
         <div className="user_right">
           {children}
@@ -36,6 +60,7 @@ const UserLayout = ({ children }) => {
 };
 
 UserLayout.propTypes = {
+  userData: PropTypes.object,
   children: PropTypes.element,
 };
 
