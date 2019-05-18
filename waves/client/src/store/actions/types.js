@@ -11,3 +11,9 @@ export const GET_WOODS = 'get_woods';
 
 export const ADD_PRODUCT = 'add_product';
 export const CLEAR_PRODUCT = 'clear_product';
+
+export const ADD_BRAND = 'add_brand';
+export const ADD_WOOD = 'add_wood';
+
+
+

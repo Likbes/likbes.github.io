@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 const links = [
@@ -61,9 +62,15 @@ const UserLayout = ({ userData, children }) => {
   );
 };
 
+function mapStateToProps(state) {
+  return {
+    userData: state.user.userData,
+  };
+}
+
 UserLayout.propTypes = {
   userData: PropTypes.object,
   children: PropTypes.element,
 };
 
-export default UserLayout;
+export default connect(mapStateToProps)(UserLayout);

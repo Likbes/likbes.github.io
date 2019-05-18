@@ -11,6 +11,7 @@ import Shop from './components/Shop';
 
 import UserDashboard from './components/User';
 import AddProduct from './components/Admin/AddProduct';
+import ManageCategories from './components/Admin/ManageCategories';
 
 const Routes = () => {
   // second arg in Auth comp:
@@ -28,6 +29,7 @@ const Routes = () => {
 
         <Route path="/user/dashboard" component={Auth(UserDashboard, true)} exact />
         <Route path="/admin/add_product" exact component={Auth(AddProduct, true)} />
+        <Route path="/admin/manage_categories" exact component={Auth(ManageCategories, true)} />
       </Switch>
     </Layout>
   );

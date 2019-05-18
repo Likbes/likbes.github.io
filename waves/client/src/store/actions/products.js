@@ -9,6 +9,8 @@ import {
   GET_WOODS,
   ADD_PRODUCT,
   CLEAR_PRODUCT,
+  ADD_BRAND,
+  ADD_WOOD,
 } from './types';
 
 export function getProductsByArrival() {
@@ -103,5 +105,33 @@ export function getWoods() {
   return {
     type: GET_WOODS,
     payload: request,
+  };
+}
+
+export function addBrand(dataToSubmit, existingBrands) {
+  const request = axios
+    .post(`${PRODUCT_SERVER}/brand`, dataToSubmit)
+    .then(res => {
+      const { success, brand } = res.data;
+      let brands = [...existingBrands, brand];
+      return { success, brands };
+    });
+  return {
+    type: ADD_BRAND,
+    payload: request
+  };
+}
+
+
+export function addWood(dataToSubmit, existingWoods) {
+  const request = axios.post(`${PRODUCT_SERVER}/wood`, dataToSubmit)
+    .then(res => {
+      const { success, wood } = res.data;
+      let woods = [...existingWoods, wood];
+      return { success, woods };
+    });
+  return {
+    type: ADD_WOOD,
+    payload: request
   };
 }

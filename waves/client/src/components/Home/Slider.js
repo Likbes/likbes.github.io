@@ -2,7 +2,7 @@ import React from 'react';
 import ReactSlider from 'react-slick';
 import MyButton from '../utils/button';
 
-const Slider = (props) => {
+const Slider = () => {
 
   const slides = [
     {

@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import UserLayout from '../../hoc/user';
+import UserLayout from '../../../hoc/user';
 import Form from './Form';
 
-import { update, reset, generateData, isFormValid, populateOptionFields } from '../utils/Form/formActions';
-import { getBrands, getWoods, addProduct, clearProduct } from '../../store/actions/products';
+import { update, reset, generateData, isFormValid, populateOptionFields } from '../../utils/Form/formActions';
+import { getBrands, getWoods, addProduct, clearProduct } from '../../../store/actions/products';
 import { connect } from 'react-redux';
 
 class AddProduct extends Component {
@@ -17,7 +17,7 @@ class AddProduct extends Component {
 
   state = {
     formError: false,
-    formSuccess: '',
+    formSuccess: false,
     formdata: {
       name: {
         element: 'input',
@@ -180,7 +180,17 @@ class AddProduct extends Component {
         validationMessage: '',
         showLabel: true,
       },
-    }
+      images: {
+        value: [],
+        validation: {
+          required: false,
+        },
+        valid: true,
+        touched: false,
+        validationMessage: '',
+        showLabel: false,
+      },
+    },
   }
 
   componentDidMount() {
@@ -198,6 +208,17 @@ class AddProduct extends Component {
       const newFormData = populateOptionFields(formdata, products.woods, 'wood');
       this.updateFields(newFormData);
     });
+  }
+
+  imagesHandler = imgs => {
+    const { formdata } = this.state;
+    const newFormdata = { ...formdata };
+
+    if (formdata.images.value.length === imgs.length) return;
+    newFormdata['images'].value = imgs;
+    newFormdata['images'].valid = true;
+
+    this.setState({ formdata: newFormdata });
   }
 
   resetFields = () => {
@@ -261,16 +282,16 @@ class AddProduct extends Component {
   }
 
   render() {
-    const { userData } = this.props;
     const { formError, formSuccess, formdata } = this.state;
 
     return (
-      <UserLayout userData={userData}>
+      <UserLayout>
         <>
           <h1>Add product</h1>
           <Form
             handleSubmit={this.handleSubmit}
             updateForm={this.updateForm}
+            imagesHandler={imgs => this.imagesHandler(imgs)}
             formError={formError}
             formSuccess={formSuccess}
             {...formdata}
@@ -284,7 +305,6 @@ class AddProduct extends Component {
 const mapStateToProps = state => {
   return {
     products: state.products,
-    userData: state.user.userData,
   };
 };
 

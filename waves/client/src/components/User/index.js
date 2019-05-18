@@ -5,17 +5,18 @@ import MyButton from '../utils/button';
 
 const UserDashboard = ({ user }) => {
   const { userData } = user;
+  const { name, lastname, email, phone } = userData;
 
   return (
-    <UserLayout userData={userData}>
+    <UserLayout>
       <>
         <div className="user_nfo_panel">
           <h1>User information</h1>
           <div>
-            <span>{userData.name}</span>
-            <span>{userData.lastname}</span>
-            <span>{userData.email}</span>
-            <span>{userData.phone}</span>
+            <span>{name}</span>
+            <span>{lastname}</span>
+            <span>{email}</span>
+            <span>{phone}</span>
           </div>
           <MyButton
             type="default"

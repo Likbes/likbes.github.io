@@ -6,6 +6,8 @@ import {
   GET_WOODS,
   ADD_PRODUCT,
   CLEAR_PRODUCT,
+  ADD_BRAND,
+  ADD_WOOD
 } from '../actions/types';
 
 export default function (state = {}, action) {
@@ -34,6 +36,16 @@ export default function (state = {}, action) {
 
     case CLEAR_PRODUCT:
       return { ...state, addProduct: [] };
+
+    case ADD_BRAND: {
+      const { success, brands } = action.payload;
+      return { ...state, addBrand: success, brands };
+    }
+
+    case ADD_WOOD: {
+      const { success, woods } = action.payload;
+      return { ...state, addWood: success, woods };
+    }
     default:
       return state;
   }

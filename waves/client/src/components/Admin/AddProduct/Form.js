@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import FormField from '../utils/Form/formField';
+import FormField from '../../utils/Form/formField';
+import FileUpload from '../../utils/Form/fileUpload';
 
 const Form = ({
   handleSubmit,
   updateForm,
+  imagesHandler,
   formError,
   formSuccess,
   name,
@@ -16,10 +18,17 @@ const Form = ({
   frets,
   shipping,
   available,
-  publish
+  publish,
+  images
 }) => {
   return (
     <form onSubmit={e => handleSubmit(e)}>
+      <FileUpload
+        imagesHandler={imgs => imagesHandler(imgs)}
+        reset={formSuccess}
+        images={images}
+      />
+
       <FormField
         id="name"
         formdata={name}
@@ -108,8 +117,9 @@ const Form = ({
 Form.propTypes = {
   handleSubmit: PropTypes.func,
   updateForm: PropTypes.func,
+  imagesHandler: PropTypes.func,
   formError: PropTypes.bool,
-  formSuccess: PropTypes.string,
+  formSuccess: PropTypes.bool,
   name: PropTypes.object,
   description: PropTypes.object,
   price: PropTypes.object,
@@ -119,6 +129,7 @@ Form.propTypes = {
   shipping: PropTypes.object,
   available: PropTypes.object,
   publish: PropTypes.object,
+  images: PropTypes.object,
 };
 
 export default Form;

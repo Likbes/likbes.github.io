@@ -44,7 +44,8 @@ export const reset = (formdata, formName) => {
   const newFormdata = { ...formdata };
 
   for (let key in newFormdata) {
-    newFormdata[key].value = '';
+    if (key === 'images') newFormdata[key].value = [];
+    else newFormdata[key].value = '';
     newFormdata[key].valid = false;
     newFormdata[key].touched = false;
     newFormdata[key].validationMessage = false;
@@ -70,6 +71,7 @@ export const isFormValid = (formdata, formName) => {
 
   for (let key in formdata) {
     formIsValid = formdata[key].valid && formIsValid;
+    console.log(formdata[key].valid, key);
   }
   return formIsValid;
 
