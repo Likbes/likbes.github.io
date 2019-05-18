@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import UserLayout from '../../hoc/user';
 import Form from './Form';
 
-import { update, generateData, isFormValid, populateOptionFields } from '../utils/Form/formActions';
-import { getBrands, getWoods } from '../../store/actions/products';
+import { update, reset, generateData, isFormValid, populateOptionFields } from '../utils/Form/formActions';
+import { getBrands, getWoods, addProduct, clearProduct } from '../../store/actions/products';
 import { connect } from 'react-redux';
 
 class AddProduct extends Component {
@@ -183,12 +183,6 @@ class AddProduct extends Component {
     }
   }
 
-  updateFields = newFormdata => {
-    this.setState({
-      formdata: newFormdata,
-    });
-  }
-
   componentDidMount() {
     const { dispatch } = this.props;
     const { formdata } = this.state;
@@ -206,16 +200,68 @@ class AddProduct extends Component {
     });
   }
 
-  handleSubmit = () => {
+  resetFields = () => {
+    const { dispatch } = this.props;
+    const { formdata } = this.state;
+    const newFormData = reset(formdata, 'products');
 
+    this.setState({
+      formdata: newFormData,
+      formSuccess: true,
+    });
+
+    setTimeout(() => {
+      this.setState({
+        formSuccess: false,
+      }, () => dispatch(clearProduct()));
+    }, 3000);
   }
 
-  updateForm = () => {
+  updateFields = newFormdata => {
+    this.setState({
+      formdata: newFormdata,
+    });
+  }
 
+  handleSubmit = e => {
+    e.preventDefault();
+
+    const { formdata } = this.state;
+    const { dispatch } = this.props;
+    let dataToSubmit = generateData(formdata, 'products');
+    let formIsValid = isFormValid(formdata, 'products');
+
+    if (formIsValid) {
+      dispatch(addProduct(dataToSubmit))
+        .then(() => {
+          const { addProduct } = this.props.products;
+          if (addProduct.success) {
+            this.resetFields();
+          } else {
+            this.setState({
+              formError: true,
+            });
+          }
+        });
+    } else {
+      this.setState({
+        formError: true,
+      });
+    }
+  }
+
+  updateForm = e => {
+    const { formdata } = this.state;
+    const newFormdata = update(e, formdata, 'products');
+
+    this.setState({
+      formError: false,
+      formdata: newFormdata,
+    });
   }
 
   render() {
-    const { userData, products } = this.props;
+    const { userData } = this.props;
     const { formError, formSuccess, formdata } = this.state;
 
     return (
@@ -240,7 +286,6 @@ const mapStateToProps = state => {
     products: state.products,
     userData: state.user.userData,
   };
-  console.log(state);
 };
 
 export default connect(mapStateToProps)(AddProduct);

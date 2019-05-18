@@ -37,9 +37,11 @@ const UserLayout = ({ userData, children }) => {
     <div className="container">
       <div className="user_container">
         <div className="user_left_nav">
-          <h2>My account</h2>
-          <div className="links">
-            {generateLinks(links)}
+          <div>
+            <h2>My account</h2>
+            <div className="links">
+              {generateLinks(links)}
+            </div>
           </div>
           {userData.isAdmin ?
             <div>

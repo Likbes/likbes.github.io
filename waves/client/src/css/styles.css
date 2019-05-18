@@ -890,6 +890,31 @@ footer .business_nfo .nfo h4 {
   margin-top: 50px;
 }
 
+@media(max-width: 800px) {
+  .user_container {
+    flex-wrap: wrap;
+  }
+
+  .user_container .user_left_nav {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    width: 100%;
+    padding-left: 29px;
+  }
+}
+
+@media(max-width: 600px) {
+  .user_container .user_left_nav {
+    flex-wrap: wrap;
+    text-align: center; 
+  }
+
+  .user_container .user_left_nav .links a {
+    margin: 0 auto;
+  }
+}
+
 /*=============================
         ADMIN
 ===============================*/

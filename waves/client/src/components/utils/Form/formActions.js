@@ -40,6 +40,19 @@ export const update = (element, formdata, formName) => {
   return newFormdata;
 };
 
+export const reset = (formdata, formName) => {
+  const newFormdata = { ...formdata };
+
+  for (let key in newFormdata) {
+    newFormdata[key].value = '';
+    newFormdata[key].valid = false;
+    newFormdata[key].touched = false;
+    newFormdata[key].validationMessage = false;
+  }
+
+  return newFormdata;
+};
+
 export const generateData = (formdata, formName) => {
   let dataToSubmit = {};
 
