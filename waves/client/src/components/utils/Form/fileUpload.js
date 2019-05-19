@@ -68,7 +68,7 @@ function FileUpload({ imagesHandler, reset }) {
   };
 
   useEffect(() => { imagesHandler(uploadedFiles); });
-  useEffect(() => { if (reset) setFiles([]); });
+  useEffect(() => { if (reset) setFiles([]); }, [reset]);
 
   return (
     <>

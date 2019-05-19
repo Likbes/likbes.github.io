@@ -65,7 +65,7 @@ class Register extends Component {
         value: '',
         config: {
           name: 'phone_input',
-          type: 'number',
+          type: 'tel',
           placeholder: 'Enter your phone',
         },
         validation: {

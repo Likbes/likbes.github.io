@@ -70,13 +70,15 @@ class ManageWoods extends Component {
     event.preventDefault();
 
     const { dispatch, products } = this.props;
-    let dataToSubmit = generateData(this.state.formdata, 'woods');
-    let formIsValid = isFormValid(this.state.formdata, 'woods');
+    const { formdata } = this.state;
+
+    let dataToSubmit = generateData(formdata, 'woods');
+    let formIsValid = isFormValid(formdata, 'woods');
     let existingWoods = products.woods;
 
     if (formIsValid) {
-      dispatch(addWood(dataToSubmit, existingWoods)).then(response => {
-        if (response.payload.success) {
+      dispatch(addWood(dataToSubmit, existingWoods)).then(res => {
+        if (res.payload.success) {
           this.resetFieldsHandler();
         } else {
           this.setState({ formError: true });
@@ -89,12 +91,10 @@ class ManageWoods extends Component {
     }
   }
 
-
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch(getWoods());
   }
-
 
   render() {
     const { formError, formdata } = this.state;
@@ -109,21 +109,20 @@ class ManageWoods extends Component {
             </div>
           </div>
           <div className="right">
-
             <form onSubmit={(e) => this.submitForm(e)}>
-
               <FormField
-                id={'name'}
+                id='name'
                 formdata={formdata.name}
                 change={(e) => this.updateForm(e)}
               />
-
 
               {formError ?
                 <div className="error_label">
                   Please check your data
                 </div>
-                : null}
+                : ''
+              }
+
               <button
                 type="button"
                 className="button"

@@ -12,6 +12,7 @@ mongoose.Promise = global.Promise;
 mongoose.connect(process.env.DATABASE, {
   useNewUrlParser: true,
   useCreateIndex: true,
+  useFindAndModify: false,
 });
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -122,6 +123,47 @@ app.get('/api/users/removeImage', auth, admin, (req, res) => {
   cloudinary.uploader.destroy(public_id, (err, result) => {
     if (err) return res.json({ success: false });
     res.status(200).send('ok');
+  });
+});
+
+app.post('/api/users/addToCart', auth, (req, res) => {
+  const { _id } = req.user;
+  const { productId } = req.query;
+
+  User.findOne({ _id }, (err, doc) => {
+    let duplicate = false;
+
+    doc.cart.forEach(item => {
+      if (item.id == productId) duplicate = true;
+    });
+
+    if (duplicate) {
+      User.findOneAndUpdate({
+        _id,
+        'cart.id': mongoose.Types.ObjectId(productId)
+      },
+      { $inc: { 'cart.$.quantity': 1 } },
+      { new: true },
+      (err, doc) => {
+        if (err) return res.json({ success: false, err });
+        res.status(200).json(doc.cart);
+      });
+    } else {
+      User.findOneAndUpdate({ _id }, {
+        $push: {
+          cart: {
+            id: mongoose.Types.ObjectId(productId),
+            quantity: 1,
+            date: Date.now(),
+          },
+        },
+      },
+      { new: true },
+      (err, doc) => {
+        if (err) return res.json({ success: false, err });
+        res.status(200).json(doc.cart);
+      });
+    }
   });
 });
 

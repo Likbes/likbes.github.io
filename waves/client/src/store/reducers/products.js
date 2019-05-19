@@ -7,7 +7,9 @@ import {
   ADD_PRODUCT,
   CLEAR_PRODUCT,
   ADD_BRAND,
-  ADD_WOOD
+  ADD_WOOD,
+  GET_PRODUCT_DETAIL,
+  CLEAR_PRODUCT_DETAIL,
 } from '../actions/types';
 
 export default function (state = {}, action) {
@@ -35,7 +37,7 @@ export default function (state = {}, action) {
       return { ...state, addProduct: action.payload };
 
     case CLEAR_PRODUCT:
-      return { ...state, addProduct: [] };
+      return { ...state, addProduct: action.payload };
 
     case ADD_BRAND: {
       const { success, brands } = action.payload;
@@ -46,6 +48,13 @@ export default function (state = {}, action) {
       const { success, woods } = action.payload;
       return { ...state, addWood: success, woods };
     }
+
+    case GET_PRODUCT_DETAIL:
+      return { ...state, prodDetail: action.payload };
+
+    case CLEAR_PRODUCT_DETAIL:
+      return { ...state, prodDetail: action.payload };
+
     default:
       return state;
   }

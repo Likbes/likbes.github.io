@@ -47,6 +47,19 @@ const MyButton = ({
         );
         break;
 
+      case 'add_to_cart':
+        temp = (
+          <button
+            type="button"
+            className="add_to_cart_link"
+            onClick={runAction}
+          >
+            <FontAwesomeIcon icon="shopping-bag" />
+            Add to cart
+          </button>
+        );
+        break;
+
       default:
         temp = '';
     }

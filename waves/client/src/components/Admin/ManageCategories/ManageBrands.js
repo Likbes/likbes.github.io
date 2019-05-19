@@ -65,18 +65,19 @@ class ManageBrands extends Component {
     });
   }
 
-
   submitForm = (event) => {
     event.preventDefault();
 
     const { dispatch, products } = this.props;
-    let dataToSubmit = generateData(this.state.formdata, 'brands');
-    let formIsValid = isFormValid(this.state.formdata, 'brands');
+    const { formdata } = this.state;
+
+    let dataToSubmit = generateData(formdata, 'brands');
+    let formIsValid = isFormValid(formdata, 'brands');
     let existingBrands = products.brands;
 
     if (formIsValid) {
-      dispatch(addBrand(dataToSubmit, existingBrands)).then(response => {
-        if (response.payload.success) {
+      dispatch(addBrand(dataToSubmit, existingBrands)).then(res => {
+        if (res.payload.success) {
           this.resetFieldsHandler();
         } else {
           this.setState({ formError: true });
@@ -94,8 +95,9 @@ class ManageBrands extends Component {
     dispatch(getBrands());
   }
 
-
   render() {
+    const { formdata, formError } = this.state;
+
     return (
       <div className="admin_category_wrapper">
         <h1>Brands</h1>
@@ -106,33 +108,28 @@ class ManageBrands extends Component {
             </div>
           </div>
           <div className="right">
-
-            <form onSubmit={(event) => this.submitForm(event)}>
-
+            <form onSubmit={e => this.submitForm(e)}>
               <FormField
-                id={'name'}
-                formdata={this.state.formdata.name}
-                change={(element) => this.updateForm(element)}
+                id='name'
+                formdata={formdata.name}
+                change={e => this.updateForm(e)}
               />
 
-
-              {this.state.formError ?
+              {formError ?
                 <div className="error_label">
                   Please check your data
                 </div>
-                : null}
+                : ''
+              }
               <button
                 type="button"
                 className="button"
-                onClick={(event) => this.submitForm(event)}
+                onClick={e => this.submitForm(e)}
               >
                 Add brand
               </button>
-
             </form>
-
           </div>
-
         </div>
       </div>
     );

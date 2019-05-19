@@ -2,8 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import MyButton from './button';
+import { connect } from 'react-redux';
+import { addToCart } from '../../store/actions/user';
 
 const Card = ({
+  user,
+  dispatch,
   grid,
   images,
   brand,
@@ -12,6 +16,8 @@ const Card = ({
   description,
   _id
 }) => {
+
+  const { isAuth } = user.userData;
 
   const renderCardImg = images => {
     if (images.length > 0) return images[0].url;
@@ -62,7 +68,11 @@ const Card = ({
               <div className="button_wrapp">
                 <MyButton
                   type="bag_link"
-                  runAction={() => { }}
+                  runAction={() => {
+                    isAuth ?
+                      dispatch(addToCart(_id)) :
+                      console.log('u need to login');
+                  }}
                 />
               </div>
             </div>
@@ -74,12 +84,17 @@ const Card = ({
 };
 
 Card.propTypes = {
+  user: PropTypes.object,
+  dispatch: PropTypes.func,
   grid: PropTypes.string,
   images: PropTypes.array,
   brand: PropTypes.object,
   name: PropTypes.string,
   price: PropTypes.number,
+  description: PropTypes.string,
   _id: PropTypes.string
 };
 
-export default Card;
+export default connect(
+  ({ user }) => { return { user }; }
+)(Card);

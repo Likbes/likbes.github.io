@@ -1,11 +1,13 @@
 import axios from 'axios';
 
-import { USER_SERVER } from '../../components/utils/misc';
+import { USER_SERVER, PRODUCT_SERVER } from '../../components/utils/misc';
 import {
   LOGIN_USER,
   REGISTER_USER,
   AUTH_USER,
   LOGOUT_USER,
+  ADD_TO_CART,
+  GET_CART_ITEMS,
 } from './types';
 
 export function loginUser(dataToSubmit) {
@@ -48,6 +50,39 @@ export function logoutUser() {
 
   return {
     type: LOGOUT_USER,
+    payload: request,
+  };
+}
+
+export function addToCart(_id) {
+  const request = axios
+    .post(`${USER_SERVER}/addToCart?productId=${_id}`)
+    .then(res => res.data);
+
+  return {
+    type: ADD_TO_CART,
+    payload: request,
+  };
+}
+
+export function getCartItems(cartItems, userCart) {
+  const request = axios
+    .get(`${PRODUCT_SERVER}/articles_by_id?id=${cartItems}&type=array`)
+    .then(res => {
+      userCart.forEach(item => {
+        res.data.forEach((itemInfo, i) => {
+          if (item.id === itemInfo._id) {
+            res.data[i].quantity = item.quantity;
+          }
+        });
+      });
+      return res.data;
+    });
+
+  console.log(request);
+
+  return {
+    type: GET_CART_ITEMS,
     payload: request,
   };
 }
