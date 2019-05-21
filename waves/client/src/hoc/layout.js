@@ -3,15 +3,26 @@ import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
-export default class Layout extends Component {
+import { connect } from 'react-redux';
+import { getSiteData } from '../store/actions/site';
+
+class Layout extends Component {
+  componentDidMount() {
+    const { dispatch, site } = this.props;
+    if (Object.keys(site.length === 0)) {
+      dispatch(getSiteData());
+    }
+  }
+
   render() {
+    const { site } = this.props;
     return (
       <>
         <Header />
         <div className="page_container">
           {this.props.children}
         </div>
-        <Footer />
+        <Footer data={site} />
       </>
     );
   }
@@ -19,4 +30,12 @@ export default class Layout extends Component {
 
 Layout.propTypes = {
   children: PropTypes.element,
+  dispatch: PropTypes.func,
+  site: PropTypes.object,
 };
+
+export default connect(state => {
+  return {
+    site: state.site,
+  };
+})(Layout);

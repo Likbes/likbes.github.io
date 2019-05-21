@@ -71,7 +71,8 @@ const Card = ({
                   runAction={() => {
                     isAuth ?
                       dispatch(addToCart(_id)) :
-                      console.log('u need to login');
+                      // eslint-disable-next-line no-console
+                      console.log('u need to log in');
                   }}
                 />
               </div>

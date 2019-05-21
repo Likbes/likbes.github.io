@@ -6,8 +6,13 @@ import {
   REGISTER_USER,
   AUTH_USER,
   LOGOUT_USER,
+  UPDATE_PROFILE,
+  CLEAR_UPDATE_PROFILE,
   ADD_TO_CART,
   GET_CART_ITEMS,
+  REMOVE_FROM_CART,
+  CLEAR_CART_DETAIL,
+  ON_SUCCESS_BUY,
 } from './types';
 
 export function loginUser(dataToSubmit) {
@@ -54,6 +59,24 @@ export function logoutUser() {
   };
 }
 
+export function updateProfile(dataToSubmit) {
+  const request = axios
+    .post(`${USER_SERVER}/updateProfile`, dataToSubmit)
+    .then(res => res.data);
+
+  return {
+    type: UPDATE_PROFILE,
+    payload: request,
+  };
+}
+
+export function clearUpdateProfile() {
+  return {
+    type: CLEAR_UPDATE_PROFILE,
+    payload: [],
+  };
+}
+
 export function addToCart(_id) {
   const request = axios
     .post(`${USER_SERVER}/addToCart?productId=${_id}`)
@@ -70,19 +93,56 @@ export function getCartItems(cartItems, userCart) {
     .get(`${PRODUCT_SERVER}/articles_by_id?id=${cartItems}&type=array`)
     .then(res => {
       userCart.forEach(item => {
-        res.data.forEach((itemInfo, i) => {
+        res.data.forEach(itemInfo => {
           if (item.id === itemInfo._id) {
-            res.data[i].quantity = item.quantity;
+            itemInfo.quantity = item.quantity;
           }
         });
       });
       return res.data;
     });
 
-  console.log(request);
-
   return {
     type: GET_CART_ITEMS,
+    payload: request,
+  };
+}
+
+export function removeFromCart(id) {
+  const request = axios
+    .get(`${USER_SERVER}/removeFromCart?productId=${id}`)
+    .then(res => {
+      const { cart, cartDetail } = res.data;
+      cart.forEach(item => {
+        cartDetail.forEach(itemInfo => {
+          if (item.id === itemInfo._id) {
+            itemInfo.quantity = item.quantity;
+          }
+        });
+      });
+      return res.data;
+    });
+
+  return {
+    type: REMOVE_FROM_CART,
+    payload: request,
+  };
+}
+
+export function clearCartDetail() {
+  return {
+    type: CLEAR_CART_DETAIL,
+    payload: [],
+  };
+}
+
+export function onSuccessBuy(data) {
+  const request = axios
+    .post(`${USER_SERVER}/successBuy`, data)
+    .then(res => res.data);
+
+  return {
+    type: ON_SUCCESS_BUY,
     payload: request,
   };
 }

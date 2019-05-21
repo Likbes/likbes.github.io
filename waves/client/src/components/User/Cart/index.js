@@ -2,9 +2,15 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import UserLayout from '../../../hoc/user';
 import ProductBlock from '../../utils/User/productBlock';
+import Paypal from '../../utils/Paypal';
 
 import { connect } from 'react-redux';
-import { getCartItems } from '../../../store/actions/user';
+import {
+  getCartItems,
+  clearCartDetail,
+  removeFromCart,
+  onSuccessBuy
+} from '../../../store/actions/user';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -27,7 +33,8 @@ class Cart extends Component {
       userData: PropTypes.shape({
         cart: PropTypes.array,
       }),
-      cartDetail: PropTypes.object,
+      cartDetail: PropTypes.array,
+      successBuy: PropTypes.bool,
     }),
     dispatch: PropTypes.func,
   }
@@ -58,6 +65,12 @@ class Cart extends Component {
     }
   }
 
+  componentWillUnmount() {
+    const { dispatch } = this.props;
+
+    dispatch(clearCartDetail());
+  }
+
   // add a clear state req
 
   calculateTotal = cartDetail => {
@@ -86,7 +99,44 @@ class Cart extends Component {
   }
 
   removeItem = id => {
+    const { dispatch } = this.props;
 
+    dispatch(removeFromCart(id))
+      .then(() => {
+        const { cartDetail } = this.props.user;
+        if (cartDetail.length <= 0) {
+          this.setState({
+            showTotal: false,
+          });
+        } else {
+          this.calculateTotal(cartDetail);
+        }
+      });
+  }
+
+  transactionError = () => {
+
+  }
+
+  transactionCanceled = () => {
+
+  }
+
+  transactionSuccess = data => {
+    const { dispatch, user } = this.props;
+
+    dispatch(onSuccessBuy({
+      cartDetail: user.cartDetail,
+      paymentData: data,
+    })).then(() => {
+      const { successBuy } = this.props.user;
+      if (successBuy) {
+        this.setState({
+          showTotal: false,
+          showSuccess: true,
+        });
+      }
+    });
   }
 
   render() {
@@ -112,7 +162,12 @@ class Cart extends Component {
             {
               showTotal ?
                 <div className="paypal_button_container">
-
+                  <Paypal
+                    toPay={total}
+                    transactionError={data => this.transactionError(data)}
+                    transactionCanceled={data => this.transactionCanceled(data)}
+                    onSuccess={data => this.transactionSuccess(data)}
+                  />
                 </div> : ''
             }
           </div>

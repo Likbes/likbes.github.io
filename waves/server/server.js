@@ -1,11 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const mongoose = require('mongoose');
 const formidable = require('express-formidable');
 const cloudinary = require('cloudinary');
 
 const app = express();
+const mongoose = require('mongoose');
+const async = require('async');
 require('dotenv').config();
 
 mongoose.Promise = global.Promise;
@@ -30,7 +31,8 @@ const { User } = require('./modules/user');
 const { Brand } = require('./modules/brand');
 const { Wood } = require('./modules/wood');
 const { Product } = require('./modules/product');
-
+const { Payment } = require('./modules/payment');
+const { Site } = require('./modules/site');
 
 // Middlewares
 const { auth } = require('./middleware/auth');
@@ -106,6 +108,28 @@ app.get('/api/users/logout', auth, (req, res) => {
   );
 });
 
+app.post('/api/users/updateProfile', auth, (req, res) => {
+  const { _id } = req.user;
+
+  User.findOneAndUpdate(
+    { _id },
+    {
+      $set: req.body,
+    },
+    { new: true },
+    err => {
+      if (err) return res.json({ success: false, err });
+
+      return res.status(200).send({
+        success: true,
+
+      });
+    },
+  );
+});
+
+// PRODUCT DETAIL
+
 app.post('/api/users/uploadImage', auth, admin, formidable(), (req, res) => {
   cloudinary.uploader.upload(req.files.file.path, (result) => {
     const { public_id, url } = result;
@@ -120,11 +144,13 @@ app.post('/api/users/uploadImage', auth, admin, formidable(), (req, res) => {
 
 app.get('/api/users/removeImage', auth, admin, (req, res) => {
   let { public_id } = req.query;
-  cloudinary.uploader.destroy(public_id, (err, result) => {
+  cloudinary.uploader.destroy(public_id, (err) => {
     if (err) return res.json({ success: false });
     res.status(200).send('ok');
   });
 });
+
+// CART
 
 app.post('/api/users/addToCart', auth, (req, res) => {
   const { _id } = req.user;
@@ -138,33 +164,146 @@ app.post('/api/users/addToCart', auth, (req, res) => {
     });
 
     if (duplicate) {
-      User.findOneAndUpdate({
-        _id,
-        'cart.id': mongoose.Types.ObjectId(productId)
-      },
-      { $inc: { 'cart.$.quantity': 1 } },
-      { new: true },
-      (err, doc) => {
-        if (err) return res.json({ success: false, err });
-        res.status(200).json(doc.cart);
-      });
+      User.findOneAndUpdate(
+        { _id, 'cart.id': mongoose.Types.ObjectId(productId) },
+        { $inc: { 'cart.$.quantity': 1 } },
+        { new: true },
+        (err, doc) => {
+          if (err) return res.json({ success: false, err });
+          res.status(200).json(doc.cart);
+        });
     } else {
-      User.findOneAndUpdate({ _id }, {
-        $push: {
-          cart: {
-            id: mongoose.Types.ObjectId(productId),
-            quantity: 1,
-            date: Date.now(),
+      User.findOneAndUpdate(
+        { _id },
+        {
+          $push: {
+            cart: {
+              id: mongoose.Types.ObjectId(productId),
+              quantity: 1,
+              date: Date.now(),
+            },
           },
         },
-      },
-      { new: true },
-      (err, doc) => {
-        if (err) return res.json({ success: false, err });
-        res.status(200).json(doc.cart);
-      });
+        { new: true },
+        (err, doc) => {
+          if (err) return res.json({ success: false, err });
+          res.status(200).json(doc.cart);
+        });
     }
   });
+});
+
+app.get('/api/users/removeFromCart', auth, (req, res) => {
+  const { _id } = req.user;
+  const { productId } = req.query;
+
+  User.findOneAndUpdate(
+    { _id },
+    {
+      '$pull': {
+        'cart': { 'id': mongoose.Types.ObjectId(productId) }
+      }
+    },
+    { new: true },
+    (err, doc) => {
+      const { cart } = doc;
+      const array = cart.map(item => {
+        return mongoose.Types.ObjectId(item.id);
+      });
+
+      Product
+        .find({ '_id': { $in: array } })
+        .populate('brand')
+        .populate('wood')
+        .exec((err, cartDetail) => {
+          return res.status(200).json({
+            cartDetail,
+            cart
+          });
+        });
+    }
+  );
+});
+
+// PAYPAL
+
+app.post('/api/users/successBuy', auth, (req, res) => {
+
+  const { cartDetail, paymentData } = req.body;
+  const {
+    _id: id, name, lastname, email, phone
+  } = req.user;
+
+  // user history 
+
+  let history = [];
+  let transactionData = {};
+
+  cartDetail.forEach(({
+    name,
+    price,
+    quantity,
+    _id: id,
+    brand,
+  }) => {
+    history.push({
+      name, price, quantity, id,
+      brand: brand.name,
+      paymentId: paymentData.paymentId,
+      dateOfPurchase: Date.now(),
+    });
+  });
+
+  // payments dash
+  transactionData.user = {
+    id, name, lastname, email, phone
+  };
+
+  transactionData.data = paymentData;
+  transactionData.product = history;
+
+  User.findOneAndUpdate(
+    { _id: id },
+    { $push: { history }, $set: { cart: [] } },
+    { new: true },
+    err => {
+      if (err) return res.json({ success: false, err });
+
+      const payment = new Payment(transactionData);
+      payment.save((err, doc) => {
+        if (err) return res.json({ success: false, err });
+
+        const { product } = doc;
+        let products = [];
+
+        product.forEach(({ id, quantity }) => {
+          products.push({ id, quantity });
+        });
+
+        async.eachSeries(products, ({ id: _id, quantity }, cb) => {
+          Product.update(
+            { _id },
+            {
+              $inc: {
+                'sold': quantity,
+              }
+            },
+            { new: false },
+            cb
+          );
+        }, (err) => {
+          // after all
+          if (err) return res.json({ success: false, err });
+
+          res.status(200).json({
+            success: true,
+            cart: [],
+            cartDetail: [],
+          });
+        });
+      });
+    },
+  );
 });
 
 //=====================================
@@ -317,6 +456,35 @@ app.get('/api/product/articles', (req, res) => {
     });
 });
 
+//=====================================
+//                SITE
+//=====================================
+
+app.get('/api/site/siteData', (req, res) => {
+  Site.find({}, (err, site) => {
+    if (err) return res.status(400).send(err);
+    res.status(200).send(site[0].siteInfo);
+  });
+});
+
+app.post('/api/site/siteData', auth, admin, (req, res) => {
+
+  Site.findOneAndUpdate(
+    { name: 'Site' },
+    {
+      $set: { siteInfo: req.body },
+    },
+    { new: true },
+    (err, doc) => {
+      if (err) return res.status(400).send(err);
+      return res.status(200).send({
+        success: true,
+        siteInfo: doc.siteInfo,
+      });
+    }
+  );
+}
+);
 const port = process.env.PORT || 3002;
 
 app.listen(port, () => {

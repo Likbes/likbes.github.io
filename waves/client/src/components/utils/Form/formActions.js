@@ -71,7 +71,6 @@ export const isFormValid = (formdata, formName) => {
 
   for (let key in formdata) {
     formIsValid = formdata[key].valid && formIsValid;
-    console.log(formdata[key].valid, key);
   }
   return formIsValid;
 
@@ -88,4 +87,14 @@ export const populateOptionFields = (formdata, arrayData = [], field) => {
   newFormdata[field].config.options = newArray;
 
   return newFormdata;
+};
+
+export const populateFields = (formdata, userData) => {
+  for (let key in formdata) {
+    formdata[key].value = userData[key];
+    formdata[key].touched = true;
+    formdata[key].valid = true;
+    formdata[key].validationMessage = '';
+  }
+  return formdata;
 };

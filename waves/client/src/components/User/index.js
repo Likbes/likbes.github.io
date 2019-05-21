@@ -1,11 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import UserLayout from '../../hoc/user';
+import HistoryBlock from '../utils/User/historyBlock';
 import MyButton from '../utils/button';
 
 const UserDashboard = ({ user }) => {
   const { userData } = user;
-  const { name, lastname, email, phone } = userData;
+  const {
+    name,
+    lastname,
+    email,
+    phone,
+    history,
+  } = userData;
 
   return (
     <UserLayout>
@@ -25,12 +32,17 @@ const UserDashboard = ({ user }) => {
           />
         </div>
 
-        <div className="user_nfo_panel">
-          <h1>History purchases</h1>
-          <div className="user_product_block_wrapper">
-            history
-          </div>
-        </div>
+        {
+          history ?
+            <div className="user_nfo_panel">
+              <h1>History purchases</h1>
+              <div className="user_product_block_wrapper">
+                <HistoryBlock
+                  products={history}
+                />
+              </div>
+            </div> : ''
+        }
       </>
     </UserLayout>
   );

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const ProductBlock = ({
   products,
-  removeItems
+  removeItem
 }) => {
   const { cartDetail } = products;
 
@@ -51,7 +51,7 @@ const ProductBlock = ({
           <div className="item btn">
             <button
               type="button"
-              onClick={() => removeItems(_id)}
+              onClick={() => removeItem(_id)}
               className="cart_remove_btn"
             >
                 Remove
@@ -70,7 +70,7 @@ const ProductBlock = ({
 
 ProductBlock.propTypes = {
   products: PropTypes.object,
-  removeItems: PropTypes.func,
+  removeItem: PropTypes.func,
 };
 
 export default ProductBlock;

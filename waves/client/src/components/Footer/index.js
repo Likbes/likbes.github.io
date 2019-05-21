@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -9,7 +10,9 @@ import faEnvelope from '@fortawesome/fontawesome-free-solid/faEnvelope';
 
 library.add(faCompass, faPhone, faClock, faEnvelope);
 
-const Footer = () => {
+const Footer = ({ data: { siteData } }) => {
+  if (!siteData) return '';
+  const { address, phone, hours, email } = siteData[0];
   return (
     <footer className="bck_b_dark">
       <div className="container">
@@ -28,7 +31,7 @@ const Footer = () => {
                 />
                 <div className="nfo">
                   <h4>Adress</h4>
-                  <h4>Kramer 2345</h4>
+                  <h4>{address}</h4>
                 </div>
               </div>
 
@@ -39,7 +42,7 @@ const Footer = () => {
                 />
                 <div className="nfo">
                   <h4>Phone</h4>
-                  <h4>2345-2345</h4>
+                  <h4>{phone}</h4>
                 </div>
               </div>
 
@@ -50,7 +53,7 @@ const Footer = () => {
                 />
                 <div className="nfo">
                   <h4>Working hours</h4>
-                  <h4>Mon-Sun/ 9am-8pm</h4>
+                  <h4>{hours}</h4>
                 </div>
               </div>
 
@@ -61,7 +64,7 @@ const Footer = () => {
                 />
                 <div className="nfo">
                   <h4>Email</h4>
-                  <h4>likbes.js@gmail.com</h4>
+                  <h4>{email}</h4>
                 </div>
               </div>
             </div>
@@ -76,6 +79,10 @@ const Footer = () => {
       </div>
     </footer>
   );
+};
+
+Footer.propTypes = {
+  data: PropTypes.object,
 };
 
 export default Footer;

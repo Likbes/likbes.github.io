@@ -97,6 +97,10 @@ tr:nth-child(even) {
   background-color: #dddddd;
 }
 
+tr:nth-child(even) td {
+  border: 1px solid #F8F8F8;
+}
+
 /*============================
           FORM
 ==============================*/
@@ -735,10 +739,15 @@ footer .business_nfo .nfo h4 {
   color: #717171;
 }
 .cart_no_items,
-.cart_success {
+.cart_success  {
   text-align: center;
   font-size: 28px;
   color: #999592;
+  text-transform: uppercase;
+}
+
+.cart_success p {
+  margin: 10px auto;
 }
 
 
