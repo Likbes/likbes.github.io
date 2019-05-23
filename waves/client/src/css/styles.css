@@ -75,6 +75,14 @@ a {
   color: #dddddd;
 }
 
+.not_found_container svg {
+  font-size: 240px;
+}
+
+.not_found_container h2 {
+  margin: 30px auto;
+}
+
 .clear:after {
   content: '';
   display: block;

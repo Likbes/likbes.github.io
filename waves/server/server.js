@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const formidable = require('express-formidable');
 const cloudinary = require('cloudinary');
+const SHA1 = require('crypto-js/sha1');
 
 const app = express();
 const mongoose = require('mongoose');
@@ -40,6 +41,14 @@ const { Site } = require('./modules/site');
 const { auth } = require('./middleware/auth');
 const { admin } = require('./middleware/admin');
 
+// utils
+
+const { sendEmail } = require('./utils/mail/mails');
+
+// const date = new Date();
+// const purchaseOrder = `PO-${date.getSeconds()}${date.getMilliseconds()}-${SHA1('7347384834hd')
+//   .toString().substring(0, 8)}`;
+
 //=====================================
 //                USERS
 //=====================================
@@ -62,9 +71,10 @@ app.get('/api/users/auth', auth, (req, res) => {
 app.post('/api/users/register', (req, res) => {
   const user = new User(req.body);
 
-  user.save((err) => {
+  user.save((err, doc) => {
     if (err) return res.json({ success: false, err });
-    res.status(200).json({
+    sendEmail(doc.email, doc.name, null, 'welcome');
+    return res.status(200).json({
       success: true,
     });
   });
@@ -236,6 +246,11 @@ app.post('/api/users/successBuy', auth, (req, res) => {
     _id: id, name, lastname, email, phone
   } = req.user;
 
+  const date = new Date();
+  const purchaseOrder = `PO-${date.getSeconds()}${date.getMilliseconds()}-${
+    SHA1(id).toString().substring(0, 8)
+  }`;
+
   // user history 
 
   let history = [];
@@ -249,7 +264,8 @@ app.post('/api/users/successBuy', auth, (req, res) => {
     brand,
   }) => {
     history.push({
-      name, price, quantity, id,
+      name, price, quantity,
+      id, purchaseOrder,
       brand: brand.name,
       paymentId: paymentData.paymentId,
       dateOfPurchase: Date.now(),
@@ -261,14 +277,17 @@ app.post('/api/users/successBuy', auth, (req, res) => {
     id, name, lastname, email, phone
   };
 
-  transactionData.data = paymentData;
+  transactionData.data = {
+    ...paymentData, purchaseOrder,
+  };
+
   transactionData.product = history;
 
   User.findOneAndUpdate(
     { _id: id },
     { $push: { history }, $set: { cart: [] } },
     { new: true },
-    err => {
+    (err, user) => {
       if (err) return res.json({ success: false, err });
 
       const payment = new Payment(transactionData);
@@ -296,7 +315,7 @@ app.post('/api/users/successBuy', auth, (req, res) => {
         }, (err) => {
           // after all
           if (err) return res.json({ success: false, err });
-
+          sendEmail(user.email, user.name, null, 'purchase', transactionData);
           res.status(200).json({
             success: true,
             cart: [],

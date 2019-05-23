@@ -18,6 +18,8 @@ import AddProduct from './components/Admin/AddProduct';
 import ManageCategories from './components/Admin/ManageCategories';
 import SiteInfo from './components/Admin/SiteInfo';
 
+import NotFound from './components/utils/NotFound';
+
 const Routes = () => {
   // second arg in Auth comp:
   // null - see to auth and unregistered users; 
@@ -40,6 +42,8 @@ const Routes = () => {
         <Route path="/admin/add_product" exact component={Auth(AddProduct, true)} />
         <Route path="/admin/manage_categories" exact component={Auth(ManageCategories, true)} />
         <Route path="/admin/site_info" exact component={Auth(SiteInfo, true)} />
+
+        <Route component={Auth(NotFound)} />
       </Switch>
     </Layout>
   );

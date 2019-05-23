@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 
 const HistoryBlock = ({
   products
@@ -14,10 +13,10 @@ const HistoryBlock = ({
         brand,
         price,
         quantity,
-        dateOfPurchase,
+        purchaseOrder,
       }) => (
-        <tr key={`${id}-${dateOfPurchase}`}>
-          <td>{moment(dateOfPurchase).format('MM-DD-YYYY')}</td>
+        <tr key={`${id}-${purchaseOrder}`}>
+          <td>{purchaseOrder}</td>
           <td>{`${brand} - ${name}`}</td>
           <td>{price}</td>
           <td>{quantity}</td>
@@ -30,7 +29,7 @@ const HistoryBlock = ({
       <table>
         <thead>
           <tr>
-            <th>Date of purchase</th>
+            <th>Order number</th>
             <th>Product</th>
             <th>Price paid</th>
             <th>Quantity</th>
