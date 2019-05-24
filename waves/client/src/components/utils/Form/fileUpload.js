@@ -54,9 +54,9 @@ function FileUpload({ imagesHandler, reset }) {
   };
 
   const showUploadedImages = () => {
-    return uploadedFiles.map(item => (
+    return uploadedFiles.map((item, i) => (
       <div
-        key={item.public_id}
+        key={i}
         onClick={() => onRemove(item.public_id)}
         className="img"
         style={{
@@ -67,7 +67,7 @@ function FileUpload({ imagesHandler, reset }) {
     ));
   };
 
-  useEffect(() => { imagesHandler(uploadedFiles); });
+  useEffect(() => { imagesHandler(uploadedFiles); }, [uploadedFiles]);
   useEffect(() => { if (reset) setFiles([]); }, [reset]);
 
   return (

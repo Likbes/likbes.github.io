@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const formidable = require('express-formidable');
 const cloudinary = require('cloudinary');
 const SHA1 = require('crypto-js/sha1');
+const multer = require('multer');
 
 const app = express();
 const mongoose = require('mongoose');
@@ -140,7 +141,7 @@ app.post('/api/users/updateProfile', auth, (req, res) => {
   );
 });
 
-// PRODUCT DETAIL
+// ADD PRODUCT
 
 app.post('/api/users/uploadImage', auth, admin, formidable(), (req, res) => {
   cloudinary.uploader.upload(req.files.file.path, (result) => {
@@ -160,6 +161,46 @@ app.get('/api/users/removeImage', auth, admin, (req, res) => {
     if (err) return res.json({ success: false });
     res.status(200).send('ok');
   });
+});
+
+// FILES
+
+// set file
+
+let storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/');
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}_${file.originalname}`);
+  },
+});
+const upload = multer({ storage }).single('file');
+
+app.post('/api/users/uploadFile', auth, admin, (req, res) => {
+  upload(req, res, err => {
+    if (err) return res.json({ success: false });
+    return res.status(200).json({ success: true });
+  });
+});
+
+// get files
+
+const fs = require('fs');
+const path = require('path');
+
+app.get('/api/users/adminFiles', auth, admin, (req, res) => {
+  const dir = path.resolve('.') + '/uploads/';
+  fs.readdir(dir, (err, items) => {
+    return res.status(200).send(items);
+  });
+});
+
+// download file
+
+app.get('/api/users/download/:id', auth, admin, (req, res) => {
+  const file = path.resolve('.') + `/uploads/${req.params.id}`;
+  res.download(file);
 });
 
 // CART
