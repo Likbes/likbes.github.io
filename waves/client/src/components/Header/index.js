@@ -39,13 +39,14 @@ class Header extends Component {
 
   defaultLink = link => (
     link.name === 'Log Out' ?
-      <div
+      <a
+        href="/"
         key={link.name}
         className="log_out_link"
         onClick={() => this.logoutHandler()}
       >
         {link.name}
-      </div> :
+      </a> :
       <Link to={link.linkTo} key={link.name}>
         {link.name}
       </Link>

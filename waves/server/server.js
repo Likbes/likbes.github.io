@@ -5,6 +5,7 @@ const formidable = require('express-formidable');
 const cloudinary = require('cloudinary');
 const SHA1 = require('crypto-js/sha1');
 const multer = require('multer');
+const moment = require('moment');
 
 const app = express();
 const mongoose = require('mongoose');
@@ -45,10 +46,6 @@ const { admin } = require('./middleware/admin');
 // utils
 
 const { sendEmail } = require('./utils/mail/mails');
-
-// const date = new Date();
-// const purchaseOrder = `PO-${date.getSeconds()}${date.getMilliseconds()}-${SHA1('7347384834hd')
-//   .toString().substring(0, 8)}`;
 
 //=====================================
 //                USERS
@@ -362,6 +359,52 @@ app.post('/api/users/successBuy', auth, (req, res) => {
             cart: [],
             cartDetail: [],
           });
+        });
+      });
+    },
+  );
+});
+
+// RESET PASSWORD
+
+app.post('/api/users/enterEmailToReset', (req, res) => {
+  const { email } = req.body;
+
+  User.findOne(
+    { email },
+    (err, user) => {
+      if (err || !user) return res.status(200).json({ success: false, err });
+      user.generateResetToken(
+        (err, user) => {
+          if (err) return res.status(200).json({ success: false, err });
+          sendEmail(user.email, user.name, null, 'reset_pass', user);
+          return res.json({ success: true });
+        },
+      );
+    }
+  );
+});
+
+app.post('/api/users/resetPassword', (req, res) => {
+  const { resetToken, password } = req.body;
+  const today = moment().startOf('day').valueOf();
+
+  User.findOne(
+    { resetToken, resetTokenExp: { $gte: today } },
+    (err, user) => {
+      if (!user) return res.status(200).json({
+        success: false,
+        message: 'Sorry, token bad, generate a new one'
+      });
+
+      user.password = password;
+      user.resetToken = '';
+      user.resetTokenExp = '';
+
+      user.save((err) => {
+        if (err) return res.status(200).json({ success: false, err });
+        return res.status(200).json({
+          success: true,
         });
       });
     },

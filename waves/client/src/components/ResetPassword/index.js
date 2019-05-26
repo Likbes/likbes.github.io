@@ -1,24 +1,14 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import axios from 'axios';
+
 import FormField from '../utils/Form/formField';
-
 import { update, generateData, isFormValid } from '../utils/Form/formActions';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 
-import { loginUser } from '../../store/actions/user';
-
-class LoginForm extends Component {
-
-  static propTypes = {
-    history: PropTypes.object,
-    dispatch: PropTypes.func,
-  }
+class EnterEmail extends Component {
 
   state = {
     formError: false,
-    formSuccess: '',
+    formSuccess: false,
     formdata: {
       email: {
         element: 'input',
@@ -36,27 +26,12 @@ class LoginForm extends Component {
         touched: false,
         validationMessage: '',
       },
-      password: {
-        element: 'input',
-        value: '',
-        config: {
-          name: 'password_input',
-          type: 'password',
-          placeholder: 'Enter your password',
-        },
-        validation: {
-          required: true,
-        },
-        valid: false,
-        touched: false,
-        validationMessage: '',
-      },
     },
   }
 
   updateForm = e => {
     const { formdata } = this.state;
-    const newFormdata = update(e, formdata, 'login');
+    const newFormdata = update(e, formdata, 'enter_email');
 
     this.setState({
       formError: false,
@@ -68,21 +43,25 @@ class LoginForm extends Component {
     e.preventDefault();
 
     const { formdata } = this.state;
-    const { dispatch, history } = this.props;
-    let dataToSubmit = generateData(formdata, 'login');
-    let formIsValid = isFormValid(formdata, 'login');
+    let dataToSubmit = generateData(formdata, 'enter_email');
+    let formIsValid = isFormValid(formdata, 'enter_email');
 
     if (formIsValid) {
-      dispatch(loginUser(dataToSubmit))
+      axios
+        .post('/api/users/enterEmailToReset', dataToSubmit)
         .then(res => {
-          if (res.payload.loginSuccess) {
-            history.push('/user/dashboard');
+          const { success } = res.data;
+
+          if (success) {
+            this.setState({ formSuccess: true });
+            setTimeout(() => this.setState({ formSuccess: false }), 2000);
           } else {
             this.setState({
               formError: true,
             });
           }
         });
+
     } else {
       this.setState({
         formError: true,
@@ -91,41 +70,37 @@ class LoginForm extends Component {
   }
 
   render() {
-
-    const { formError, formdata } = this.state;
-
+    const { formdata, formError, formSuccess } = this.state;
     return (
-      <div className="signin_wrapper">
+      <div className="container">
+        <h1>Reset password</h1>
         <form onSubmit={e => this.submitForm(e)}>
           <FormField
             id="email"
             formdata={formdata.email}
             change={e => this.updateForm(e)}
           />
-
-          <FormField
-            id="password"
-            formdata={formdata.password}
-            change={e => this.updateForm(e)}
-          />
-
-          <Link to="/reset_user" className="forgot_password">
-            Forgot password?
-          </Link>
+          {
+            formSuccess ?
+              <div className="form_success">
+                Success
+              </div> : ''
+          }
 
           {
             formError ?
               <div className="error_label">
-                Please check your data
+                Check entered email
               </div> :
               ''
           }
+
           <button
             type="button"
             className="button"
             onClick={e => this.submitForm(e)}
           >
-            Log in
+            Send email to reset
           </button>
         </form>
       </div>
@@ -133,4 +108,4 @@ class LoginForm extends Component {
   }
 }
 
-export default connect()(withRouter(LoginForm));
+export default EnterEmail;

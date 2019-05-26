@@ -166,7 +166,7 @@ class Register extends Component {
           <div className="register_login_container">
             <div className="left">
               <form onSubmit={e => this.submitForm(e)}>
-                <h2>Personal infomation</h2>
+                <h2>Personal information</h2>
 
                 <div className="form_block_two">
                   <div className="block">

@@ -37,7 +37,7 @@ class CollapseCheckbox extends Component {
       list ?
         list.map(item => (
           <ListItem key={item._id} style={{ padding: '7px 0' }}>
-            <ListItemText primary={item.name} />
+            <ListItemText primary={item.name} className="collapse_item" />
             <ListItemSecondaryAction>
               <Checkbox
                 color="primary"
@@ -94,10 +94,12 @@ class CollapseCheckbox extends Component {
         <List style={{ borderBottom: '1px solid #dbdbdb' }}>
           <ListItem
             onClick={this.handleClick}
+            className="collapse_block_title"
             style={{
-              padding: '10px 23px 10px 0',
-              cursor: 'pointer'
-            }}>
+              padding: '10px 23px 10px 0px',
+              cursor: 'pointer',
+            }}
+          >
             <ListItemText
               primary={title}
               className="collapse_title"

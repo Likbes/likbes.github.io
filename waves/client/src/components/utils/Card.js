@@ -8,7 +8,7 @@ import { addToCart } from '../../store/actions/user';
 const Card = ({
   user,
   dispatch,
-  grid,
+  grid = '',
   images,
   brand,
   name,

@@ -67,7 +67,7 @@ export default class CollapseRadio extends Component {
           <FormControlLabel
             key={price._id}
             value={`${price._id}`}
-            control={<Radio />}
+            control={<Radio className="radio_item" />}
             label={price.name}
             margin="none"
           />
@@ -84,7 +84,12 @@ export default class CollapseRadio extends Component {
         <List style={{ borderBottom: '1px solid #dbdbdb' }}>
           <ListItem
             onClick={this.handleClick}
-            style={{ padding: '10px 23px 10px 0', cursor: 'pointer' }}>
+            className="collapse_block_title"
+            style={{
+              padding: '10px 23px 10px 0',
+              cursor: 'pointer',
+            }}
+          >
             <ListItemText
               primary={title}
               className="collapse_title"

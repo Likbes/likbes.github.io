@@ -19,6 +19,9 @@ import AddFile from './components/Admin/AddFile';
 import ManageCategories from './components/Admin/ManageCategories';
 import SiteInfo from './components/Admin/SiteInfo';
 
+import EnterEmail from './components/ResetPassword';
+import ResetPassword from './components/ResetPassword/ResetPassword';
+
 import NotFound from './components/utils/NotFound';
 
 const Routes = () => {
@@ -44,6 +47,9 @@ const Routes = () => {
         <Route path="/admin/add_file" exact component={Auth(AddFile, true)} />
         <Route path="/admin/manage_categories" exact component={Auth(ManageCategories, true)} />
         <Route path="/admin/site_info" exact component={Auth(SiteInfo, true)} />
+
+        <Route path="/reset_user" exact component={Auth(EnterEmail, false)} />
+        <Route path="/reset_password/:token" exact component={Auth(ResetPassword)} />
 
         <Route component={Auth(NotFound)} />
       </Switch>

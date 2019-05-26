@@ -32,7 +32,10 @@ const UserLayout = ({ userData, children }) => {
 
   const generateLinks = (links) => {
     return links.map(link => (
-      <Link to={link.linkTo} key={link.name}>
+      <Link
+        to={link.linkTo}
+        key={link.name}
+      >
         {link.name}
       </Link>
     ));
