@@ -2,7 +2,7 @@
 var doCache = true;
 
 // Имя кэша
-var CACHE_NAME = '2048-cache';
+var CACHE_NAME = 'brick-breaker-cache';
 
 // Очищает старый кэш
 self.addEventListener('activate', event => {
@@ -35,6 +35,7 @@ self.addEventListener('install', function (event) {
               // Открываем и кэшируем нужные страницы и файлы
               const urlsToCache = [
                 'img/',
+                'homeStyle.css',
               ]
               cache.addAll(urlsToCache)
               console.log('cached');
