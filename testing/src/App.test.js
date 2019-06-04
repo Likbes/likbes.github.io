@@ -8,6 +8,7 @@ describe('App', () => {
     const output = shallow(
       <App></App>
     );
+
     expect(shallowToJson(output)).toMatchSnapshot();
   });
 });

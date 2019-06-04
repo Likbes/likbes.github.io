@@ -4,7 +4,6 @@ import { shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
 
 describe('Counter component', () => {
-
   it('matches the snapshot', () => {
     const tree = renderer.create(<Counter />).toJSON();
 
