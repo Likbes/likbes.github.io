@@ -18,6 +18,9 @@ const App = () => (
         <li>
           <Link to="/about">About</Link>
         </li>
+        <li>
+          <Link to="/counter">Counter</Link>
+        </li>
       </ul>
       <Routes />
     </main>
