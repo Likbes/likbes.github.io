@@ -1,4 +1,4 @@
-// generic learning
+console.log('---------------generic learning--------------------');
 
 class Calc<T extends U, U extends number> {
   value: T;
@@ -16,7 +16,7 @@ class Calc<T extends U, U extends number> {
 const calc = new Calc<number, number>(10, 20);
 console.log(calc.calc());
 
-// decorator
+console.log('-----------decorator----------------');
 
 function printable(fn: Function): void {
   fn.prototype.print = function () {
@@ -24,7 +24,30 @@ function printable(fn: Function): void {
   }
 }
 
-// static properties
+function f() {
+  console.log("f(): вычисляется");
+  return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+    console.log("f(): вызван");
+  }
+}
+
+function g() {
+  console.log("g(): вычисляется");
+  return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+    console.log("g(): вызван");
+  }
+}
+
+class C {
+  @f()
+  @g()
+  method() { console.log(1) }
+}
+
+const c = new C;
+c.method();
+
+console.log('---------------static properties--------------');
 class Grid {
   static origin = { x: 0, y: 0 };
   calculateDistanceFromOrigin(point: { x: number, y: number }) {
@@ -69,7 +92,7 @@ greeterMaker.standardGreeting = "Hey there!";
 let greeter2: Greeter = new greeterMaker();
 console.log(greeter2.greet());
 
-// generics
+console.log('-----------------generics--------------------');
 
 class GenericNumber<T> {
   zeroValue?: T;
@@ -81,3 +104,14 @@ myGenericNumber.zeroValue = 0;
 myGenericNumber.add = function (x, y) { return x + y; };
 
 console.log(myGenericNumber);
+
+interface Box {
+  height: number;
+  width: number;
+}
+
+interface Box {
+  scale: number;
+}
+
+let box: Box = { height: 5, width: 6, scale: 10 };
