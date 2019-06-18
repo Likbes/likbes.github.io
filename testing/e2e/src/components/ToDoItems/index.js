@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import FlipMove from 'react-flip-move';
 
 class TodoItems extends Component {
-  constructor(props) {
-    super(props);
-  }
+
   delete = key => {
     this.props.delete(key);
   }
+
   createTasks = ({ key, text }) => {
     return (
       <li onClick={() => this.delete(key)} key={key}>{text}</li>
