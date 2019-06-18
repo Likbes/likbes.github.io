@@ -1,13 +1,6 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './style.css';
-import TodoList from './components/TodoList';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import TodoApp from './components/TodoApp'
+import './styles.css'
 
-var destination = document.querySelector ('#container');
-
-ReactDOM.render (
-  <div>
-    <TodoList />
-  </div>,
-  destination
-);
+ReactDOM.render(<TodoApp />, document.getElementById('app'))
