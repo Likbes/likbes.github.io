@@ -9,6 +9,7 @@
     "serve": "json-server db.json",
     "dev": "concurrently \"npm run watch\" \"npm run serve\"",
     "cypress": "cypress open",
+    "cypress:all": "concurrently \"npm run dev\" \" cypress run \" ",
     "start": "concurrently \"npm run dev\" \"npm run cypress\""
   },
   "keywords": [],
