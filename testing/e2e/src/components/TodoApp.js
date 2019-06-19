@@ -4,6 +4,8 @@ import TodoForm from './TodoForm'
 import TodoList from './TodoList'
 import Footer from './Footer'
 
+import { filterTodos } from '../lib/utils';
+
 import {
   saveTodo,
   loadTodos,
@@ -103,11 +105,13 @@ export default class TodoApp extends Component {
             />
           </header>
           <section className="main">
-            <TodoList
-              todos={todos}
-              handleToggle={this.handleToggle}
-              handleDelete={this.handleDelete}
-            />
+            <Route path='/:filter?' render={({ match }) =>
+              <TodoList
+                todos={filterTodos(match.params.filter, todos)}
+                handleToggle={this.handleToggle}
+                handleDelete={this.handleDelete}
+              />
+            } />
           </section>
           <Footer remaining={remaining} />
         </div>
