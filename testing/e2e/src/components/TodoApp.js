@@ -7,7 +7,8 @@ import Footer from './Footer'
 import {
   saveTodo,
   loadTodos,
-  destroyTodo
+  destroyTodo,
+  updateTodo
 } from '../lib/service';
 
 export default class TodoApp extends Component {
@@ -21,6 +22,7 @@ export default class TodoApp extends Component {
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleToggle = this.handleToggle.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -35,6 +37,25 @@ export default class TodoApp extends Component {
       .then(() => this.setState(prevState => ({
         todos: prevState.todos.filter(t => t.id !== id)
       })));
+  }
+
+  handleToggle(id) {
+    const { todos } = this.state;
+    const targetTodo = todos.find(t => t.id === id);
+    const updated = {
+      ...targetTodo,
+      isComplete: !targetTodo.isComplete,
+    };
+
+    updateTodo(updated)
+      .then(({ data }) => {
+        const { todos } = this.state;
+        const newTodos = todos.map(
+          t => t.id === data.id ? data : t
+        );
+
+        this.setState({ todos: newTodos });
+      });
   }
 
   handleSubmit(e) {
@@ -82,7 +103,11 @@ export default class TodoApp extends Component {
             />
           </header>
           <section className="main">
-            <TodoList todos={todos} handleDelete={this.handleDelete} />
+            <TodoList
+              todos={todos}
+              handleToggle={this.handleToggle}
+              handleDelete={this.handleDelete}
+            />
           </section>
           <Footer remaining={remaining} />
         </div>

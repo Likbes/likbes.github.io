@@ -1,12 +1,19 @@
 import React from 'react'
 
-const TodoItem = ({ name, id, isComplete, handleDelete }) =>
+const TodoItem = ({
+  name,
+  id,
+  isComplete,
+  handleToggle,
+  handleDelete
+}) =>
   <li className={isComplete ? 'completed' : ''}>
     <div className="view">
       <input
         className="toggle"
         type="checkbox"
         checked={isComplete}
+        onChange={() => handleToggle(id)}
       />
       <label>
         {name}
@@ -19,17 +26,23 @@ const TodoItem = ({ name, id, isComplete, handleDelete }) =>
     </div>
   </li>
 
-export default ({ todos, handleDelete }) =>
-  <ul className="todo-list">
-    {
-      todos.map(({ name, isComplete, id }) => (
-        <TodoItem
-          key={id}
-          id={id}
-          name={name}
-          isComplete={isComplete}
-          handleDelete={handleDelete}
-        />
-      ))
-    }
-  </ul>
+export default ({
+  todos,
+  handleDelete,
+  handleToggle
+}) => (
+    <ul className="todo-list">
+      {
+        todos.map(({ name, isComplete, id }) => (
+          <TodoItem
+            key={id}
+            id={id}
+            name={name}
+            isComplete={isComplete}
+            handleToggle={handleToggle}
+            handleDelete={handleDelete}
+          />
+        ))
+      }
+    </ul>
+  );
