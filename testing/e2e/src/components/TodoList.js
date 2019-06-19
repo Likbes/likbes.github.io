@@ -1,17 +1,35 @@
 import React from 'react'
 
-const TodoItem = ({ name }) =>
-  <li>
+const TodoItem = ({ name, id, isComplete, handleDelete }) =>
+  <li className={isComplete ? 'completed' : ''}>
     <div className="view">
-      <input className="toggle" type="checkbox" />
+      <input
+        className="toggle"
+        type="checkbox"
+        checked={isComplete}
+      />
       <label>
         {name}
       </label>
-      <button className="destroy" />
+      <button
+        className="destroy"
+        type="button"
+        onClick={() => handleDelete(id)}
+      />
     </div>
   </li>
 
-export default props =>
+export default ({ todos, handleDelete }) =>
   <ul className="todo-list">
-    {props.todos.map(({ name, id }) => <TodoItem key={id} name={name} />)}
+    {
+      todos.map(({ name, isComplete, id }) => (
+        <TodoItem
+          key={id}
+          id={id}
+          name={name}
+          isComplete={isComplete}
+          handleDelete={handleDelete}
+        />
+      ))
+    }
   </ul>
