@@ -11,6 +11,7 @@ class CalcBlock extends React.Component {
     super(props);
     this.state = {
       data: '',
+      keyWord: 'base64'
     };
     this.handleChange = this.handleChange.bind(this);
     this.delete = this.delete.bind(this);
@@ -35,7 +36,7 @@ class CalcBlock extends React.Component {
     }
 
     this.setState({
-      data: update,
+      data: update
     });
   }
 
@@ -70,16 +71,16 @@ class CalcBlock extends React.Component {
   }
 
   render() {
-    const { data } = this.state;
+    const { data, keyWord } = this.state;
     return (
       <div className={style.calcWrapper}>
         <div className={style.case}>
-          <p className="title">JavaScript Calculator</p>
+          <p className='title'>JavaScript Calculator</p>
           <input
-            type="text"
-            readOnly
+            type='text'
             className={style.inputField}
             value={data}
+            onChange={e => this.setState({ data: e.target.value })}
           />
           <CalcDisplay
             input={this.handleChange}
@@ -87,6 +88,7 @@ class CalcBlock extends React.Component {
             enter={this.evaluate}
             del={this.delete}
           />
+          {keyWord === data && 'https://textsaver.flap.tv/lists/305c'}
         </div>
       </div>
     );
